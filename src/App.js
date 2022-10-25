@@ -1,21 +1,17 @@
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { H1, SearchBtn, SelectBox } from "./components/atoms";
+
+const App = () => {
+  const items = [{name: "구미시", value: 1234}, {name: "경산시", value: 1235}, {name: "고령시", value: 1233}];
+    return (
+      <>
+      asdf
+      <H1>asdf</H1>
+      <SearchBtn/>
+      <SelectBox 
+      label="시/군/구 선택"
+      items={items}/>
+      </>
+    );
 }
 
 export default App;
