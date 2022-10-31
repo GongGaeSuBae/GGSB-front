@@ -38,11 +38,12 @@ const TopBar = () => {
 
 const Tab = (props) => {
     const [open, isOpen] = useState(true);
-    return (<RowWrapper className={open ? "TabWrapper" : "TabClosed"}>
+    return (<div className={open ? "TabArea" : "TabAreaClosed"}>
+        <RowFlex id={open ? "TabOpened" : "TabClosed"}>
     <Container className="Tab">
         <div className="ToggleBtn" onClick={() => isOpen(!open)}>{open ? <>닫기▶</> : <>열기◀</>}</div>
         {props.children}
-    </Container></RowWrapper>);
+    </Container></RowFlex></div>);
 }
 
 export { TopBar, Tab }
