@@ -1,5 +1,5 @@
-import { TopBar } from "./Common";
+import { TopBar, Tab } from "./Common";
 import { WaterQualityStandard } from "./WaterQualityInfo";
 import { GGSBMap } from "./Map";
 
-export { TopBar, WaterQualityStandard, GGSBMap }
+export { TopBar, Tab, WaterQualityStandard, GGSBMap }

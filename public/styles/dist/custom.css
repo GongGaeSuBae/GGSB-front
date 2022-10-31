@@ -55,3 +55,28 @@ div.TopBar div.row div#SearchArea div#Search select {
 div.TopBar div.row button.SearchBtn {
   height: 50px;
 }
+
+div.Tab {
+  width: 500px;
+  height: 100%;
+  position: absolute;
+  top: 128px;
+  right: 0;
+  z-index: 1;
+  background-color: white;
+  border-left: 1px solid black;
+  transition: all 0.5s;
+}
+div.Tab div.ToggleBtn {
+  width: 25px;
+  height: 100px;
+  padding: 5px;
+  background-color: blue;
+  color: white;
+  position: absolute;
+  left: -25px;
+}
+
+div.TabClosed div.Tab {
+  right: -500px;
+}

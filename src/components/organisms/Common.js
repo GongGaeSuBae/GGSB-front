@@ -2,6 +2,8 @@ import { H1, Span, P, SelectBox, SearchBtn } from "../atoms";
 import { ColFlex, RowFlex, RowWrapper } from "../molecules";
 import { Container } from "react-bootstrap";
 
+import { useState } from "react";
+
 const Logo = () => {
     return (<ColFlex id="Logo">
         <H1 className="GongGae">공개</H1>
@@ -33,4 +35,14 @@ const TopBar = () => {
         </RowWrapper>
     </Container>)
 }
-export { TopBar }
+
+const Tab = (props) => {
+    const [open, isOpen] = useState(true);
+    return (<RowWrapper className={open ? "TabWrapper" : "TabClosed"}>
+    <Container className="Tab">
+        <div className="ToggleBtn" onClick={() => isOpen(!open)}>{open ? <>닫기▶</> : <>열기◀</>}</div>
+        {props.children}
+    </Container></RowWrapper>);
+}
+
+export { TopBar, Tab }
