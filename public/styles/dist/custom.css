@@ -24,3 +24,34 @@ div.ColFlexCenter {
   flex-direction: column;
   align-items: center;
 }
+
+div.TopBar {
+  background-color: skyblue;
+}
+div.TopBar div.row {
+  width: 100%;
+  justify-content: space-between;
+}
+div.TopBar div.row div#Logo {
+  padding: 1rem;
+}
+div.TopBar div.row div#Logo h1 {
+  font-weight: bold;
+  margin: 0;
+}
+div.TopBar div.row div#Logo h1 span {
+  color: blue;
+}
+div.TopBar div.row div#SearchArea {
+  width: 50%;
+  justify-content: center;
+}
+div.TopBar div.row div#SearchArea p {
+  margin-bottom: 0;
+}
+div.TopBar div.row div#SearchArea div#Search select {
+  width: 200px;
+}
+div.TopBar div.row button.SearchBtn {
+  height: 50px;
+}

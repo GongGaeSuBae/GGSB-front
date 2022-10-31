@@ -26,14 +26,14 @@ const H4 = (props) => {
 }
 
 const SearchBtn = (props) => {
-    return <Button variant="primary" onClick={props.eventHandler}><BiSearch /></Button>
+    return <Button className="SearchBtn" variant="primary" onClick={props.eventHandler}><BiSearch /></Button>
 }
 
 const SelectBox = (props) => {
-    return <Form.Select id={props.id}>
+    return <Form.Control as="select" size="lg" id={props.id}>
         <option value="">{props.label}</option>
         {props.items.map((item) => <option value={item.value}>{item.name}</option>)}
-    </Form.Select>
+    </Form.Control>
 }
 
 const Radio = (props) => {
