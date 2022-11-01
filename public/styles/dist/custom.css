@@ -36,6 +36,7 @@ div.TopBar div.row {
 }
 div.TopBar div.row div#Logo {
   padding: 1rem;
+  padding-left: 5rem;
 }
 div.TopBar div.row div#Logo h1 {
   font-weight: bold;
