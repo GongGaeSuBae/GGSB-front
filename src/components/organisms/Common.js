@@ -46,4 +46,4 @@ const Tab = (props) => {
     </Container></RowFlex></div>);
 }
 
-export { TopBar, Tab }
+export { TopBar, Tab, Search }

@@ -1,6 +1,39 @@
+@font-face {
+  font-family: "NanumSquareRoundEB";
+  src: url("../fonts/NanumSquareRoundEB.ttf") format("truetype");
+}
+@font-face {
+  font-family: "NanumSquareRoundB";
+  src: url("../fonts/NanumSquareRoundB.ttf") format("truetype");
+}
+@font-face {
+  font-family: "NanumSquareRoundR";
+  src: url("../fonts/NanumSquareRoundR.ttf") format("truetype");
+}
+@font-face {
+  font-family: "NanumSquareRoundL";
+  src: url("../fonts/NanumSquareRoundL.ttf") format("truetype");
+}
 * {
   padding: 0;
   margin: 0;
+  font-family: NanumSquareRoundL;
+}
+
+h1 {
+  font-family: NanumSquareRoundEB;
+}
+
+h2 {
+  font-family: NanumSquareRoundB;
+}
+
+h3, h4 {
+  font-family: NanumSquareRoundR;
+}
+
+table {
+  text-align: center;
 }
 
 div.RowFlex {
@@ -93,4 +126,54 @@ div.Tab div.ToggleBtn {
 
 div#TabClosed div.Tab {
   right: -500px;
+}
+
+div#WaterQualityStandard {
+  margin: 1rem;
+}
+div#WaterQualityStandard div.WQSValueWrapper {
+  margin: 1rem 0;
+}
+div#WaterQualityStandard div.WQSValueWrapper h4 {
+  margin: 0;
+}
+
+tr > td > span#Good {
+  color: blue;
+  font-family: NanumSquareRoundB;
+}
+
+tr > td > span#Bad {
+  color: red;
+  font-family: NanumSquareRoundB;
+}
+
+div.Good {
+  width: 250px;
+  height: 250px;
+  background-image: url("../../assets/images/good.jpg");
+  background-size: cover;
+}
+
+div.Bad {
+  width: 250px;
+  height: 250px;
+  background-image: url("../../assets/images/bad.jpg");
+  background-size: cover;
+}
+
+div#WaterQualityMainInfo {
+  height: 600px;
+  padding: 50px 0;
+  justify-content: space-around;
+}
+
+div#WaterPurificationInfo {
+  padding: 50px 0;
+}
+div#WaterPurificationInfo h2 > span {
+  font-family: NanumSquareRoundEB;
+}
+div#WaterPurificationInfo #WaterPurification {
+  color: blue;
 }
