@@ -37,7 +37,7 @@ const TopBar = () => {
 }
 
 const Tab = (props) => {
-    const [open, isOpen] = useState(true);
+    const [open, isOpen] = useState(false);
     return (<div className={open ? "TabArea" : "TabAreaClosed"}>
         <RowFlex id={open ? "TabOpened" : "TabClosed"}>
     <Container className="Tab">
