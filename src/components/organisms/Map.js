@@ -41,7 +41,7 @@ const GGSBMap = () => {
 
     return (<Map 
         level={11}
-        center={{lat: 36.45133, lng: 127.734086}}
+        center={{lat: 36.45133, lng: 128.534086}}
         style={{ width: "100%", height: "1024px" }}>
             {paths.length !== 0 ? paths.map((path) =>
             <Polygon
