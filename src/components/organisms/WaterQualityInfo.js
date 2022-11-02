@@ -2,6 +2,18 @@ import { H1, H2, H4, Span, Good, Bad } from "../atoms";
 import { ColFlex, ColFlexCenter } from "../molecules";
 
 import { Table, Form } from "react-bootstrap";
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+} from "chart.js";
+import Chart from "chart.js/auto"
+import { Line } from "react-chartjs-2";
 
 const WaterQualityMainInfo = (props) => {
     return (<ColFlexCenter id="WaterQualityMainInfo">
@@ -50,12 +62,13 @@ const WaterPurificationInfo = () => {
 
 const WaterQualityGraphSearchHanlder = () => {
     return (<ColFlex id="WaterQualityGraphSearchHanlder">
-        <H4>▶ 관찰 주기 선택</H4>
+        <H2>▶ 관찰 주기 선택</H2>
         <Form>
             <div key="daterange"></div>
             <H4>
                 <Form.Check 
                 inline
+                defaultChecked
                 id="daterange-0"
                 className="CustomChk"
                 type="radio"
@@ -84,4 +97,83 @@ const WaterQualityGraphSearchHanlder = () => {
     )
 }
 
-export { WaterQualityMainInfo, WaterQualityStandard, WaterPurificationInfo, WaterQualityGraphSearchHanlder }
+const WaterQualityGraph = () => {
+    ChartJS.register(
+        CategoryScale,
+        LinearScale,
+        PointElement,
+        LineElement,
+        Title,
+        Tooltip,
+        Legend
+    );
+
+    const options = {
+        responsive: true,
+        interaction: {
+            mode: 'index',
+            interaction: false,
+        },
+        stacked: false,
+        scales: {
+            scaleOverride: true,
+            ph: {
+                type: 'linear',
+                display: true,
+                position: 'left',
+                ticks: {
+                    min: 5,
+                    max: 9,
+                    stepSize: 1
+                }
+            },
+            tb_cl : {
+                type: 'linear',
+                display: true,
+                position: 'right',
+                grid: {
+                    drawOnChartArea: false
+                },
+                ticks: {
+                    min: 0,
+                    max: 1,
+                    stepSize: 0.2
+                }
+            }
+
+        }
+    };
+    const waterQualityData = {
+        labels: ["00", "06", "12", "18", "24"],
+        datasets: [
+            {
+                label: "pH",
+                data: [7.6455, 7.6391, 7.6383, 7.6440, 7.6455],
+                fill: false,
+                borderColor: "rgba(242, 114, 140, 1)",
+                yAxisID: 'ph',
+            },
+            {
+                label: "탁도",
+                data: [0.0525, 0.0532, 0.0536, 0.0528, 0.0524],
+                fill: false,
+                borderColor: "rgba(255, 212, 0, 1)",
+                yAxisID: 'tb_cl'
+            },
+            {
+                label: "잔류염소",
+                data: [0.9707, 0.9111, 0.8970, 0.9397, 0.9662],
+                fill: false,
+                borderColor: "rgba(39, 170, 225, 1)",
+                yAxisID: 'tb_cl'
+            }
+        ]
+    }
+
+    return (<ColFlex id="WaterQualityGraphWrapper">
+        <Line data={waterQualityData} options={options}/>
+    </ColFlex>)
+}
+
+export { WaterQualityMainInfo, WaterQualityStandard, WaterPurificationInfo,
+     WaterQualityGraphSearchHanlder, WaterQualityGraph }

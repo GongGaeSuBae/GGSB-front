@@ -1,6 +1,7 @@
 import { P } from "../atoms";
 import { ColFlex } from "../molecules";
-import { Search, WaterQualityStandard, WaterQualityMainInfo, WaterPurificationInfo, WaterQualityGraphSearchHanlder } from "../organisms";
+import { Search, WaterQualityStandard, WaterQualityMainInfo, WaterPurificationInfo, 
+    WaterQualityGraphSearchHanlder, WaterQualityGraph } from "../organisms";
 
 const SearchArea = () => {
     return (<ColFlex id="SearchArea">
@@ -20,6 +21,8 @@ const WaterQualityGraphTab = () => {
     return (<ColFlex id="Tab2">
         <WaterPurificationInfo />
         <WaterQualityGraphSearchHanlder />
+        <WaterQualityGraph />
+        <WaterQualityStandard />
     </ColFlex>)
 }
 
