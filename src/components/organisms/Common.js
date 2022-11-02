@@ -38,12 +38,26 @@ const TopBar = () => {
 
 const Tab = (props) => {
     const [open, isOpen] = useState(false);
+    const SubTab = () => {
+        return (
+        <RowFlex id="SubTab">
+            <RowFlex 
+            id={props.select === 'info' ? 'open' : 'close'}
+            clickHandler={() => props.handler('info')}>동네 수질</RowFlex>
+            <RowFlex 
+            id={props.select === 'graph' ? 'open' : 'close'}
+            clickHandler={() => props.handler('graph')}>수질 추이</RowFlex>
+        </RowFlex>            
+        )
+    }
     return (<div className={open ? "TabArea" : "TabAreaClosed"}>
         <RowFlex id={open ? "TabOpened" : "TabClosed"}>
     <Container className="Tab">
         <div className="ToggleBtn" onClick={() => isOpen(!open)}>{open ? <>닫기▶</> : <>열기◀</>}</div>
+        <SubTab />
         {props.children}
     </Container></RowFlex></div>);
 }
+
 
 export { TopBar, Tab, Search }

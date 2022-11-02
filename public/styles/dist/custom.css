@@ -177,3 +177,16 @@ div#WaterPurificationInfo h2 > span {
 div#WaterPurificationInfo #WaterPurification {
   color: blue;
 }
+
+div#SubTab {
+  border-bottom: 1px solid black;
+  margin: 0 -15px;
+}
+div#SubTab .RowFlex {
+  border: 1px solid black;
+  padding: 0.5rem 1rem;
+  font-family: NanumSquareRoundB;
+}
+div#SubTab #open {
+  background-color: skyblue;
+}

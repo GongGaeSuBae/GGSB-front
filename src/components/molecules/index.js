@@ -9,7 +9,7 @@ const ColWrapper = (props) => {
 }
 
 const RowFlex = (props) => {
-    return (<div id={props.id} className="RowFlex">{props.children}</div>);
+    return (<div id={props.id} className="RowFlex" onClick={props.clickHandler}>{props.children}</div>);
 }
 
 const ColFlex = (props) => {
