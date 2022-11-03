@@ -6,6 +6,7 @@ import $ from "jquery";
 const GGSBMap = () => {
     let [paths, setPaths] = useState([]);
     let [names, setNames] = useState([]);
+    let [cities, setCities] = useState([]);
     let [centers, setCenters] = useState([]);
     const [center, setCenter] = useState({lat: 36.45133, lng: 128.534086});
     const [level, setLevel] = useState(11);
@@ -15,18 +16,26 @@ const GGSBMap = () => {
         let pthtmp = [];
         let nmtmp = [];
         let cttmp = [];
+        let citytmp = [];
 
         $.getJSON(`${process.env.PUBLIC_URL}/assets/TKmap.geojson`, function(geojson) {
             var data = geojson.features;
             var coordinates = [];
             var name = '';
-
+            var cityCoord = ''
             $.each(data, function(index, val) {
                 coordinates = val.geometry.coordinates;
                 name = val.properties.EMD_NM;
-                displayArea(coordinates, name);
+                cityCoord = displayArea(coordinates, name);
                 nmtmp.push(name);
                 setNames(nmtmp);
+
+                findCityName(cityCoord, function(res, status) {
+                    if (status === kakao.maps.services.Status.OK) {
+                        citytmp.push(res[0].address_name.split(' ')[1]);
+                        setCities(citytmp);
+                    }
+                });
             })
         })
         // 도형 그리기
@@ -43,11 +52,14 @@ const GGSBMap = () => {
                     path.push({ lat: point.x, lng: point.y });
                 })
             })
-            pthtmp.push(path);
+            pthtmp.push(path); 
             setPaths(pthtmp);
 
-            cttmp.push(centroid(points));
+            var centerCoord = centroid(points);
+            cttmp.push(centerCoord);
             setCenters(cttmp);
+
+            return centerCoord;
         }
     }, []);
 
@@ -65,6 +77,10 @@ const GGSBMap = () => {
             area += f * 3;
         }
         return { lat: x/area, lng: y/area };
+    }
+
+    function findCityName(center, callback) {
+        geocoder.coord2RegionCode(center.lng, center.lat, callback);
     }
 
     var mouseOverOpt = {
