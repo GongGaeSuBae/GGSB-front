@@ -24,9 +24,9 @@ const API = {
         const res = await axiosInstance.get(`/location?district=${district}`);
         return res;
     },
-    searchWaterQualityByDistrict: async(district) => {
+    searchWaterQualityByDistrict: async(city, district) => {
         const {today, hour } = todayUtil();
-        const res = await axiosInstance.get(`/waterquality?district=${district}&today=${today}&hour=${hour}`);
+        const res = await axiosInstance.get(`/waterquality?city=${city}&district=${district}&today=${today}&hour=${hour}`);
         return res;
     },
     searchWaterQualityCompact: async() => {
@@ -34,9 +34,9 @@ const API = {
         const res = await axiosInstance.get(`/waterquality?today=${today}&hour=${hour}`);
         return res;
     },
-    showWaterQualityGraph: async(district, opt) => {
+    showWaterQualityGraph: async(city, district) => {
         const { today } = todayUtil();
-        const res = await axiosInstance.get(`/waterquality/graph?district=${district}&startDay=${today}&range=${opt}`);
+        const res = await axiosInstance.get(`/waterquality/graph?city=${city}&district=${district}&startDay=${today}`);
         return res;
     }
 
