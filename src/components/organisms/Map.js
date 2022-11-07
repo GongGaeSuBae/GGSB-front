@@ -9,7 +9,7 @@ const GGSBMap = () => {
     let [cities, setCities] = useState([]);
     let [centers, setCenters] = useState([]);
     const [center, setCenter] = useState({lat: 36.45133, lng: 128.534086});
-    const [level, setLevel] = useState(11);
+    const [level, setLevel] = useState(10);
     const geocoder = new kakao.maps.services.Geocoder();
     // 파일 불러오기
     useEffect(() => {
@@ -84,13 +84,13 @@ const GGSBMap = () => {
     }
 
     var mouseOverOpt = {
-        fillColor: 'skyblue',
-        fillOpacity: 0.8
+        fillColor: '#F8C4B4',
+        fillOpacity: 1
     }
 
     var mouseOutOpt = {
-        fillColor: 'gray',
-        fillOpacity: 0.8
+        fillColor: 'white',
+        fillOpacity: 0.6
     }
 
     var mouseClickOpt = {
@@ -124,11 +124,11 @@ const GGSBMap = () => {
             onMouseout={(e)=> onMouseOutEvt(e)}
             onClick={(e) => onClickEvt(e, idx)}
             path={path}
-            strokeWeight={2}
-            strokeColor={'black'}
+            strokeWeight={1}
+            strokeColor={'#a7a9ac'}
             strokeOpacity={0.8}
-            fillColor={'gray'}
-            fillOpacity={0.7}
+            fillColor={'white'}
+            fillOpacity={0.6}
             />
             ) : <></>}
         </Map>);

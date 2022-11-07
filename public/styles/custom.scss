@@ -18,6 +18,11 @@
     src: url("../fonts/NanumSquareRoundL.ttf") format("truetype");
 }
 
+$GGSB_WHITE: #F5FEFF;
+$GGSB_SKYBLUE: #BDE4F4;
+$GGSB_BLUE: #007bff;
+$GGSB_RED: #DD6B4D;
+
 * {
     padding: 0;
     margin: 0;
@@ -63,9 +68,13 @@ div.ColFlexCenter {
 }
 
 div.TopBar {
-    background-color: skyblue;
+    background-color: $GGSB_SKYBLUE;
     position: fixed;
     z-index: 5;
+    padding: 11px 0;
+    h5 {
+        font-family: NanumSquareRoundB;
+    }
     div.row {
         width: 100%;
         justify-content: space-between;
@@ -76,7 +85,7 @@ div.TopBar {
                 font-weight: bold;
                 margin: 0;
                 span {
-                    color: blue;
+                    color: $GGSB_BLUE;
                 }
             }
         }
@@ -90,6 +99,13 @@ div.TopBar {
             div#Search {
                 select {
                     width: 200px;
+                    height: 50px;
+                }
+
+                button.SearchBtn {
+                    margin: 0 7px;
+                    width: 75px;
+                    height: 50px;
                 }
             }
         }
@@ -101,10 +117,10 @@ div.TopBar {
 }
 
 div.TabArea, div.TabAreaClosed {
-    width: 500px;
-    height: 896px;
+    width: 700px;
+    height: 920px;
     position: absolute;
-    top: 128px;
+    top: 105px;
     right: 0;
 }
 
@@ -113,8 +129,8 @@ div.TabAreaClosed {
 }
 
 div.Tab {
-    width: 500px;
-    height: 896px;
+    width: 700px;
+    height: 920px;
     position: relative;
     right: 0;
     z-index: 1;
@@ -126,7 +142,7 @@ div.Tab {
         width: 25px;
         height: 100px;
         padding: 5px;
-        background-color: blue;
+        background-color: $GGSB_BLUE;
         color: white;
         position: absolute;
         left: -25px;
@@ -135,12 +151,19 @@ div.Tab {
 
 div#TabClosed {
     div.Tab {
-        right: -500px;
+        right: -700px;
     }
 }
 
 div#WaterQualityStandard {
+    // position: absolute;
+    // top: 100px;
     margin: 1rem;
+    // padding: 2rem 3rem;
+    // z-index: 2;
+    // background-color: #ffffff;
+    // background-color: rgba( 255, 255, 255, 0.7 );
+
     div.WQSValueWrapper {
         margin: 1rem 0;
         h4 {
@@ -150,12 +173,12 @@ div#WaterQualityStandard {
 }
 
 tr > td > span#Good {
-    color: blue;
+    color: $GGSB_BLUE;
     font-family: NanumSquareRoundB;
 }
 
 tr > td > span#Bad {
-    color: red;
+    color: $GGSB_RED;
     font-family: NanumSquareRoundB;
 }
 
@@ -175,7 +198,7 @@ div.Bad {
 
 div#WaterQualityMainInfo {
     height: 600px;
-    padding: 50px 0;
+    padding: 20px 0;
     justify-content: space-around;
 }
 
@@ -185,7 +208,7 @@ div#WaterPurificationInfo {
         font-family: NanumSquareRoundEB;
     }
     #WaterPurification {
-        color: blue;
+        color: $GGSB_BLUE;
     }
 }
 
@@ -195,12 +218,12 @@ div#SubTab {
 
     .RowFlex {
         border: 1px solid black;
-        padding: 0.5rem 1rem;
+        padding: 0.75rem 2rem;
         font-family: NanumSquareRoundB;
     }
 
     #open {
-        background-color: skyblue
+        background-color: $GGSB_SKYBLUE;
     }
 }
     
