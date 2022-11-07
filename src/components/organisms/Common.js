@@ -18,19 +18,16 @@ const Logo = () => {
 const Search = () => {
     const { cities } = useCities();
     const cityItem = [];
-    cityItem.push({name: '시/군/구', value: ''})
     cities.map((c) => cityItem.push({name: c, value: c}));
     
     const dispatch = useDispatch();
     const state = useSelector((state) => state);
 
-    const SubSearch = () => {
+    const DistrictSearch = () => {
         const { districts } = useDistricts(state.city);
         const districtItem = [];
-        districtItem.push({name: '읍/면/동', value: ''})
         districts.map((d) => districtItem.push({name: d, value: d}));
 
-        useEffect(() => { console.log(state)});
         return (<>
         <SelectBox 
         label="읍/면/동" 
@@ -45,13 +42,13 @@ const Search = () => {
     <ColFlex id="SearchArea">
         <h5>💧수질이 궁금한 지역을 검색해주세요</h5>
         <RowFlex id="Search">
-            <SelectBox label="경상북도" items={[{name: '경상북도', value: ''}]}></SelectBox>
+            <SelectBox label="경상북도" items={[]}></SelectBox>
             <SelectBox label="시/군/구" 
             items={cityItem}
             eventHandler={e => {
                 dispatch(Action.dispatchSearchCity(e.currentTarget.value));
                 }}></SelectBox>
-            <SubSearch />
+            <DistrictSearch />
             <SearchBtn />
         </RowFlex>
     </ColFlex>);
