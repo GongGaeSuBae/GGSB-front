@@ -30,7 +30,7 @@ const SearchBtn = (props) => {
 }
 
 const SelectBox = (props) => {
-    return <Form.Control as="select" size="lg" id={props.id}>
+    return <Form.Control as="select" size="lg" id={props.id} onChange={props.eventHandler}>
         <option value="">{props.label}</option>
         {props.items.map((item) => <option value={item.value}>{item.name}</option>)}
     </Form.Control>
