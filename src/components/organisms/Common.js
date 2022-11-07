@@ -21,7 +21,6 @@ const Search = () => {
     
     const dispatch = useDispatch();
     const state = useSelector((state) => state);
-    console.log(state);
     
     const DistrictSearch = () => {
         const { districts } = useDistricts(state.city);
@@ -33,6 +32,7 @@ const Search = () => {
         id="districtSearch"
         name="districtSearch"
         label="읍/면/동" 
+        value={state.district}
         items={districtItem}
         eventHandler={e => {
             dispatch(Action.dispatchSearchDistrict(e.currentTarget.value));
@@ -48,7 +48,7 @@ const Search = () => {
         <H5>💧수질이 궁금한 지역을 검색해주세요</H5>
         <RowFlex id="Search">
             <SelectBox id="stateSearch" name="stateSearch" label="경상북도" items={[]}></SelectBox>
-            <SelectBox id="citySearch" name="citySearch" label="시/군/구" 
+            <SelectBox id="citySearch" name="citySearch" label="시/군/구" value={state.city}
             items={cityItem}
             eventHandler={e => {
                 dispatch(Action.dispatchSearchCity(e.currentTarget.value));

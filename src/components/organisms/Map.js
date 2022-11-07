@@ -16,7 +16,8 @@ const GGSBMap = () => {
     const geocoder = new kakao.maps.services.Geocoder();
 
     const dispatch = useDispatch();
-
+    const state = useSelector((state) => state);
+    
     // 파일 불러오기
     useEffect(() => {
         let pthtmp = [];
@@ -136,7 +137,7 @@ const GGSBMap = () => {
             strokeWeight={1}
             strokeColor={'#a7a9ac'}
             strokeOpacity={0.8}
-            fillColor={'white'}
+            fillColor={state.district === names[idx] ? 'blue' : 'white'}
             fillOpacity={0.6}
             />
             ) : <></>}
