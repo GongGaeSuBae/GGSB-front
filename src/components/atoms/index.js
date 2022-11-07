@@ -25,6 +25,10 @@ const H4 = (props) => {
     return <h4 id={props.id} className="CustomH4Tag">{props.children}</h4>
 }
 
+const H5 = (props) => {
+    return <h5 id={props.id} className="CustomH5Tag">{props.children}</h5>
+}
+
 const SearchBtn = (props) => {
     return <Button className="SearchBtn" variant="primary" onClick={props.eventHandler}><BiSearch /></Button>
 }
@@ -52,4 +56,4 @@ const Bad = () => {
     return(<div className="Bad"></div>);
 }
 
-export { P, Span, H1, H2, H3, H4, SearchBtn, SelectBox, Radio, Good, Bad };
+export { P, Span, H1, H2, H3, H4, H5, SearchBtn, SelectBox, Radio, Good, Bad };
