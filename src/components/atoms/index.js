@@ -34,7 +34,7 @@ const SearchBtn = (props) => {
 }
 
 const SelectBox = (props) => {
-    return <Form.Control as="select" size="lg" id={props.id} name={props.name} onChange={props.eventHandler} defaultValue={''}>
+    return <Form.Control as="select" size="lg" id={props.id} name={props.name} onChange={props.eventHandler} value={props.value}>
         <option value="">{props.label}</option>
         {props.items.map((item) => <option value={item.value}>{item.name}</option>)}
     </Form.Control>
