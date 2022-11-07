@@ -9,7 +9,6 @@ import * as Action from "../../redux/Action";
 const GGSBMap = () => {
     let [paths, setPaths] = useState([]);
     let [names, setNames] = useState([]);
-    let [cities, setCities] = useState([]);
     let [centers, setCenters] = useState([]);
     const [center, setCenter] = useState({lat: 36.45133, lng: 128.534086});
     const [level, setLevel] = useState(10);
@@ -23,28 +22,21 @@ const GGSBMap = () => {
         let pthtmp = [];
         let nmtmp = [];
         let cttmp = [];
-        let citytmp = [];
 
         $.getJSON(`${process.env.PUBLIC_URL}/assets/TKmap.geojson`, function(geojson) {
             var data = geojson.features;
             var coordinates = [];
             var name = '';
-            var cityCoord = ''
+
             $.each(data, function(index, val) {
                 coordinates = val.geometry.coordinates;
                 name = val.properties.EMD_NM;
-                cityCoord = displayArea(coordinates, name);
+                displayArea(coordinates, name);
                 nmtmp.push(name);
                 setNames(nmtmp);
-
-                findCityName(cityCoord, function(res, status) {
-                    if (status === kakao.maps.services.Status.OK) {
-                        citytmp.push(res[0].address_name.split(' ')[1]);
-                        setCities(citytmp);
-                    }
-                });
             })
         })
+
         // 도형 그리기
         function displayArea(coordinates, name) {
             var path = [];
@@ -65,8 +57,6 @@ const GGSBMap = () => {
             var centerCoord = centroid(points);
             cttmp.push(centerCoord);
             setCenters(cttmp);
-
-            return centerCoord;
         }
     }, []);
 
@@ -86,7 +76,7 @@ const GGSBMap = () => {
         return { lat: x/area, lng: y/area };
     }
 
-    function findCityName(center, callback) {
+    const findCityName = (center, callback) => {
         geocoder.coord2RegionCode(center.lng, center.lat, callback);
     }
 
@@ -114,13 +104,19 @@ const GGSBMap = () => {
     }
     const onClickEvt = (e, idx) => {
         setCenter(centers[idx]);
+        findCityName(centers[idx], (res, status) => {
+            if (status === kakao.maps.services.Status.OK) {
+                dispatch(Action.dispatchSearchCity(res[0].region_2depth_name));
+                dispatch(Action.dispatchSearchDistrict(res[0].region_3depth_name));
+            }
+        });
+
         setLevel(level > 9 ? level-2 : level);
         e.setOptions(mouseClickOpt);
-        dispatch(Action.dispatchSearchCity(cities[idx]))
-        dispatch(Action.dispatchSearchDistrict(names[idx]))
         dispatch(Action.tabOpened());
     }
 
+    // console.log(cities, names);
     return (<Map id="GGSBMap"
         level={level}
         onZoomChanged={(map) => {
