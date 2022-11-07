@@ -1,4 +1,4 @@
-import API from '../api/API';
+import API from './api/API';
 import { useEffect, useState } from 'react';
 
 const useSingleWaterQuality= (district) => {

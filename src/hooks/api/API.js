@@ -8,17 +8,17 @@ const todayUtil = () => {
 
     var todayParam = year+'-'+month+'-'+day;
     var hourParam = ('0' + now.getHours().slice(-2));
-    return todayParam, hourParam;
+    return { todayParam, hourParam };
 }
 
 const API = {
     findCities: async() => {
         const res = await axiosInstance.get(`/location?state=경상북도`);
-        return res;
+        return res.data.city;
     },
     findDistricts: async(city) => {
         const res = await axiosInstance.get(`/location?city=${city}`);
-        return res;
+        return res.data.district;
     },
     findLocationByDistrict: async(district) => {
         const res = await axiosInstance.get(`/location?district=${district}`);
