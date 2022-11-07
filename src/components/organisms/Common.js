@@ -1,4 +1,4 @@
-import { H1, Span, P, SelectBox, SearchBtn } from "../atoms";
+import { H1, H5, Span, P, SelectBox, SearchBtn } from "../atoms";
 import { ColFlex, RowFlex, RowWrapper } from "../molecules";
 import { Container } from "react-bootstrap";
 
@@ -13,7 +13,6 @@ const Logo = () => {
         <H1 className="GongGae">공개<Span>水</Span>배</H1>
     </ColFlex>);
 }
-
 
 const Search = () => {
     const { cities } = useCities();
@@ -41,18 +40,28 @@ const Search = () => {
         }}></SelectBox>
         </>);
     }
+    
+    const validate = () => state.city !== '' && state.district !== ''
 
     return (
     <ColFlex id="SearchArea">
-        <h5>💧수질이 궁금한 지역을 검색해주세요</h5>
+        <H5>💧수질이 궁금한 지역을 검색해주세요</H5>
         <RowFlex id="Search">
             <SelectBox id="stateSearch" name="stateSearch" label="경상북도" items={[]}></SelectBox>
             <SelectBox id="citySearch" name="citySearch" label="시/군/구" 
             items={cityItem}
-            eventHandler={e => dispatch(Action.dispatchSearchCity(e.currentTarget.value))}></SelectBox>
+            eventHandler={e => {
+                dispatch(Action.dispatchSearchCity(e.currentTarget.value));
+                dispatch(Action.dispatchSearchDistrict(''));
+            }}></SelectBox>
             <DistrictSearch />
             <SearchBtn
-            eventHandler={e => dispatch(Action.tabToggle())} />
+            eventHandler={e => {
+                if(validate()) 
+                    dispatch(Action.tabOpened());
+                else 
+                    alert('지역을 선택해주세요');
+            }} />
         </RowFlex>
     </ColFlex>);
 }

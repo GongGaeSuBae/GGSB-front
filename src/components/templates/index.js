@@ -22,7 +22,7 @@ const WaterQualityGraphTab = () => {
         <WaterPurificationInfo />
         <WaterQualityGraphSearchHanlder />
         <WaterQualityGraph />
-        <WaterQualityStandard />
+        {/* <WaterQualityStandard /> */}
     </ColFlex>)
 }
 

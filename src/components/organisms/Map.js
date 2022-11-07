@@ -1,7 +1,10 @@
 /*global kakao*/
-import { Map, MapMarker, Polygon, Rectangle } from "react-kakao-maps-sdk";
+import { Map, Polygon } from "react-kakao-maps-sdk";
 import { useEffect, useState } from "react";
 import $ from "jquery";
+
+import { useDispatch, useSelector } from "react-redux";
+import * as Action from "../../redux/Action";
 
 const GGSBMap = () => {
     let [paths, setPaths] = useState([]);
@@ -11,6 +14,9 @@ const GGSBMap = () => {
     const [center, setCenter] = useState({lat: 36.45133, lng: 128.534086});
     const [level, setLevel] = useState(10);
     const geocoder = new kakao.maps.services.Geocoder();
+
+    const dispatch = useDispatch();
+
     // 파일 불러오기
     useEffect(() => {
         let pthtmp = [];
@@ -109,6 +115,9 @@ const GGSBMap = () => {
         setCenter(centers[idx]);
         setLevel(level > 9 ? level-2 : level);
         e.setOptions(mouseClickOpt);
+        dispatch(Action.dispatchSearchCity(cities[idx]))
+        dispatch(Action.dispatchSearchDistrict(names[idx]))
+        dispatch(Action.tabOpened());
     }
 
     return (<Map id="GGSBMap"

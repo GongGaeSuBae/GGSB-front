@@ -1,3 +1,4 @@
+import { useCities } from '../hooks';
 import * as Action from './Action'
 
 const initialState = {
@@ -26,6 +27,12 @@ const reducers = (state=initialState, action) => {
             return {
                 ...state,
                 tabOpened: !state.tabOpened,
+            }
+        }
+        case Action.TAB_OPENED: {
+            return {
+                ...state,
+                tabOpened: true,
             }
         }
         default: {
