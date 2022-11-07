@@ -3,10 +3,12 @@ import * as Action from './Action'
 const initialState = {
    city: '',
    district: '',
+   tabOpened: false,
 }
 
 const reducers = (state=initialState, action) => {
     const { type } = action;
+
     switch (type) {
         case Action.DISPATCH_SEARCH_CITY: {
             return {
@@ -19,6 +21,12 @@ const reducers = (state=initialState, action) => {
                 ...state,
                 district: action.district,
             };
+        }
+        case Action.TAB_TOGGLE: {
+            return {
+                ...state,
+                tabOpened: !state.tabOpened,
+            }
         }
         default: {
             return state;

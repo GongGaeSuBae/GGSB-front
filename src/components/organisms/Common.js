@@ -22,7 +22,8 @@ const Search = () => {
     
     const dispatch = useDispatch();
     const state = useSelector((state) => state);
-
+    console.log(state);
+    
     const DistrictSearch = () => {
         const { districts } = useDistricts(state.city);
         const districtItem = [];
@@ -30,11 +31,14 @@ const Search = () => {
 
         return (<>
         <SelectBox 
+        id="districtSearch"
+        name="districtSearch"
         label="읍/면/동" 
         items={districtItem}
-        eventHandler={e => 
-            dispatch(Action.dispatchSearchDistrict(e.currentTarget.value))
-        }></SelectBox>
+        eventHandler={e => {
+            dispatch(Action.dispatchSearchDistrict(e.currentTarget.value));
+            console.log(e.currentTarget.value);
+        }}></SelectBox>
         </>);
     }
 
@@ -42,14 +46,13 @@ const Search = () => {
     <ColFlex id="SearchArea">
         <h5>💧수질이 궁금한 지역을 검색해주세요</h5>
         <RowFlex id="Search">
-            <SelectBox label="경상북도" items={[]}></SelectBox>
-            <SelectBox label="시/군/구" 
+            <SelectBox id="stateSearch" name="stateSearch" label="경상북도" items={[]}></SelectBox>
+            <SelectBox id="citySearch" name="citySearch" label="시/군/구" 
             items={cityItem}
-            eventHandler={e => {
-                dispatch(Action.dispatchSearchCity(e.currentTarget.value));
-                }}></SelectBox>
+            eventHandler={e => dispatch(Action.dispatchSearchCity(e.currentTarget.value))}></SelectBox>
             <DistrictSearch />
-            <SearchBtn />
+            <SearchBtn
+            eventHandler={e => dispatch(Action.tabToggle())} />
         </RowFlex>
     </ColFlex>);
 }
@@ -64,7 +67,10 @@ const TopBar = () => {
 }
 
 const Tab = (props) => {
-    const [open, isOpen] = useState(false);
+    const tabState = useSelector((state) => state.tabOpened);
+    const dispatch = useDispatch();
+    
+    useEffect(() => {}, [tabState]);
     const SubTab = () => {
         return (
         <RowFlex id="SubTab">
@@ -77,10 +83,10 @@ const Tab = (props) => {
         </RowFlex>            
         )
     }
-    return (<div className={open ? "TabArea" : "TabAreaClosed"}>
-        <RowFlex id={open ? "TabOpened" : "TabClosed"}>
+    return (<div className={tabState ? "TabArea" : "TabAreaClosed"}>
+        <RowFlex id={tabState ? "TabOpened" : "TabClosed"}>
     <Container className="Tab">
-        <div className="ToggleBtn" onClick={() => isOpen(!open)}>{open ? <>닫기▶</> : <>열기◀</>}</div>
+        <div className="ToggleBtn" onClick={() => dispatch(Action.tabToggle())}>{tabState ? <>닫기▶</> : <>열기◀</>}</div>
         <SubTab />
         {props.children}
     </Container></RowFlex></div>);
