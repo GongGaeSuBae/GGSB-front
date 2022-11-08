@@ -111,6 +111,11 @@ const WaterQualityGraph = () => {
     );
 
     const options = {
+        elements: {
+            point: {
+                radius: 0,
+            }
+        },
         responsive: true,
         interaction: {
             mode: 'index',
@@ -118,7 +123,6 @@ const WaterQualityGraph = () => {
         },
         stacked: false,
         scales: {
-            scaleOverride: true,
             ph: {
                 type: 'linear',
                 display: true,
@@ -126,7 +130,11 @@ const WaterQualityGraph = () => {
                 ticks: {
                     min: 5,
                     max: 9,
-                    stepSize: 1
+                    stepSize: 0.1
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: 'pH'
                 }
             },
             tb_cl : {
@@ -140,17 +148,31 @@ const WaterQualityGraph = () => {
                     min: 0,
                     max: 1,
                     stepSize: 0.2
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: '탁도/잔류염소'
                 }
-            }
-
+            }, 
+            x: {
+                ticks: {
+                    callback: function(val, index) {
+                        return index%3 === 0 ? this.getLabelForValue(val): ''
+                    }
+                }
+            }   
         }
     };
     const waterQualityData = {
-        labels: ["00", "06", "12", "18", "24"],
+        labels: ["00", "01", "02", "03", "04", "05", 
+        "06", "07", "08", "09", "10", "11",
+        "12", "13", "14", "15", "16", "17", 
+        "18", "19", "20", "21", "22", "23"],
         datasets: [
             {
                 label: "pH",
-                data: [7.6455, 7.6391, 7.6383, 7.6440, 7.6455, 7.4356],
+                data: [7.6455, 7.6391, 7.6383, 7.6440, 7.6455, 7.4356, 
+                    7.6455, 7.6391, 7.6383, 7.6440, 7.6455, 7.4356],
                 fill: false,
                 borderColor: "rgba(242, 114, 140, 1)",
                 yAxisID: 'ph',
