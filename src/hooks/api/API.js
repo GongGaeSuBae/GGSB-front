@@ -1,15 +1,5 @@
 import { axiosInstance } from "./AxiosInstance";
-
-const todayUtil = () => {
-    var now = new Date();
-    var year = now.getFullYear();
-    var month = ('0' + (now.getMonth()+1).slice(-2));
-    var day = ('0' + now.getDate().slice(-2));
-
-    var todayParam = year+'-'+month+'-'+day;
-    var hourParam = ('0' + now.getHours().slice(-2));
-    return { todayParam, hourParam };
-}
+import { getTodayParameter } from "../../utils/Date";
 
 const API = {
     findCities: async() => {
@@ -25,17 +15,17 @@ const API = {
         return res;
     },
     searchWaterQualityByDistrict: async(city, district) => {
-        const {today, hour } = todayUtil();
+        const {today, hour } = getTodayParameter();
         const res = await axiosInstance.get(`/waterquality?city=${city}&district=${district}&today=${today}&hour=${hour}`);
         return res;
     },
     searchWaterQualityCompact: async() => {
-        const { today, hour } = todayUtil();
+        const { today, hour } = getTodayParameter();
         const res = await axiosInstance.get(`/waterquality?today=${today}&hour=${hour}`);
         return res;
     },
     showWaterQualityGraph: async(city, district) => {
-        const { today } = todayUtil();
+        const { today } = getTodayParameter();
         const res = await axiosInstance.get(`/waterquality/graph?city=${city}&district=${district}&startDay=${today}`);
         return res;
     }
