@@ -44,7 +44,7 @@ const GGSBMap = () => {
     
             $.each(coordinates[0], function(idx, coord) {
                 $.each(coord, function(cdidx, cd) {
-                    var point = new Object();
+                    var point = {};
                     point.x = cd[1];
                     point.y = cd[0];
                     points.push(point);
@@ -80,28 +80,41 @@ const GGSBMap = () => {
         geocoder.coord2RegionCode(center.lng, center.lat, callback);
     }
 
-    var mouseOverOpt = {
-        fillColor: '#F8C4B4',
-        fillOpacity: 1
-    }
-
-    var mouseOutOpt = {
-        fillColor: 'white',
-        fillOpacity: 0.6
-    }
-
-    var mouseClickOpt = {
-        fillColor: 'blue',
-        fillOpacity: 0.8
+    const mouseEvtStyle = {
+        over: {
+            good: {
+                fillColor: 'skyblue', fillOpacity: 0.8
+            },
+            bad: {
+                fillColor: '#F8C4B4', fillOpacity: 0.8
+            }
+        },
+        out: {
+            good: {
+                fillColor: 'white', fillOpacity: 0.6
+            },
+            bad: {
+                fillColor: 'white', fillOpacity: 0.6         
+            }
+        },
+        click: {
+            good: {
+                fillColor: 'blue', fillOpacity: 0.8
+            },
+            bad: {
+                fillColor: '#FF8787', fillOpacity: 0.8
+            }
+        },
     }
 
     const onMouseOverEvt = (e) => {
-        e.setOptions(mouseOverOpt)
+        e.setOptions(mouseEvtStyle.over.bad)
     }
 
     const onMouseOutEvt = (e) => {
-        e.setOptions(mouseOutOpt)
+        e.setOptions(mouseEvtStyle.out.bad)
     }
+    
     const onClickEvt = (e, idx) => {
         setCenter(centers[idx]);
         findCityName(centers[idx], (res, status) => {
@@ -112,11 +125,10 @@ const GGSBMap = () => {
         });
 
         setLevel(level > 9 ? level-2 : level);
-        e.setOptions(mouseClickOpt);
+        e.setOptions(mouseEvtStyle.click.bad);
         dispatch(Action.tabOpened());
     }
 
-    // console.log(cities, names);
     return (<Map id="GGSBMap"
         level={level}
         onZoomChanged={(map) => {
@@ -133,7 +145,7 @@ const GGSBMap = () => {
             strokeWeight={1}
             strokeColor={'#a7a9ac'}
             strokeOpacity={0.8}
-            fillColor={state.district === names[idx] ? 'blue' : 'white'}
+            fillColor={state.district === names[idx] ? '#FF8787' : 'white'}
             fillOpacity={0.6}
             />
             ) : <></>}

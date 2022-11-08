@@ -1,4 +1,4 @@
-import { H1, H5, Span, P, SelectBox, SearchBtn } from "../atoms";
+import { H1, H5, Span, SelectBox, SearchBtn } from "../atoms";
 import { ColFlex, RowFlex, RowWrapper } from "../molecules";
 import { WaterQualityInfoTab, WaterQualityGraphTab } from "../templates"
 import { Container, Tabs, Tab } from "react-bootstrap";
@@ -37,7 +37,6 @@ const Search = () => {
         items={districtItem}
         eventHandler={e => {
             dispatch(Action.dispatchSearchDistrict(e.currentTarget.value));
-            console.log(e.currentTarget.value);
         }}></SelectBox>
         </>);
     }

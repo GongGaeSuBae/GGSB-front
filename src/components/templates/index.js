@@ -1,7 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
-import { P } from "../atoms";
+import { useSelector } from "react-redux";
 import { ColFlex } from "../molecules";
-import { Search, WaterQualityStandard, WaterQualityMainInfo, WaterPurificationInfo, 
+import { WaterQualityStandard, WaterQualityMainInfo, WaterPurificationInfo, 
     WaterQualityGraphSearchHanlder, WaterQualityGraph } from "../organisms";
 
 const WaterQualityInfoTab = () => {

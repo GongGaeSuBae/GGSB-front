@@ -2,17 +2,8 @@ import { H1, H2, H4, Span, Good, Bad } from "../atoms";
 import { ColFlex, ColFlexCenter } from "../molecules";
 
 import { Table, Form } from "react-bootstrap";
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-} from "chart.js";
-import Chart from "chart.js/auto"
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement,
+    LineElement, Title, Tooltip, Legend } from "chart.js";
 import { Line } from "react-chartjs-2";
 
 const WaterQualityMainInfo = ({city, district, phVal, tbVal, clVal}) => {
@@ -68,31 +59,15 @@ const WaterQualityGraphSearchHanlder = () => {
         <Form>
             <div key="daterange"></div>
             <H4>
-                <Form.Check 
-                inline
-                defaultChecked
-                id="daterange-0"
-                className="CustomChk"
-                type="radio"
-                name="RangeSearch"
-                value={0} 
-                label="일간" />
-                <Form.Check 
-                inline
-                id="daterange-1"
-                className="CustomChk"
-                type="radio"
-                name="RangeSearch"
-                value={1}
-                label="주간" />
-                <Form.Check 
-                inline
-                id="daterange-2"
-                className="CustomChk"
-                type="radio"
-                name="RangeSearch"
-                value={2}
-                label="월간" />
+                <Form.Check inline defaultChecked
+                id="daterange-0" className="CustomChk" type="radio"
+                name="RangeSearch" value={0} label="일간" />
+                <Form.Check inline
+                id="daterange-1" className="CustomChk" type="radio"
+                name="RangeSearch" value={1} label="주간" />
+                <Form.Check inline
+                id="daterange-2" className="CustomChk" type="radio"
+                name="RangeSearch" value={2} label="월간" />
             </H4>
         </Form>
     </ColFlex>
@@ -100,21 +75,12 @@ const WaterQualityGraphSearchHanlder = () => {
 }
 
 const WaterQualityGraph = () => {
-    ChartJS.register(
-        CategoryScale,
-        LinearScale,
-        PointElement,
-        LineElement,
-        Title,
-        Tooltip,
-        Legend
-    );
+    ChartJS.register(CategoryScale, LinearScale, PointElement,
+        LineElement, Title, Tooltip, Legend);
 
     const options = {
         elements: {
-            point: {
-                radius: 0,
-            }
+            point: { radius: 0, }
         },
         responsive: true,
         interaction: {
@@ -127,32 +93,16 @@ const WaterQualityGraph = () => {
                 type: 'linear',
                 display: true,
                 position: 'left',
-                ticks: {
-                    min: 5,
-                    max: 9,
-                    stepSize: 0.1
-                },
-                scaleLabel: {
-                    display: true,
-                    labelString: 'pH'
-                }
+                ticks: { min: 5, max: 9, stepSize: 0.1 },
+                scaleLabel: { display: true, labelString: 'pH' }
             },
             tb_cl : {
                 type: 'linear',
                 display: true,
                 position: 'right',
-                grid: {
-                    drawOnChartArea: false
-                },
-                ticks: {
-                    min: 0,
-                    max: 1,
-                    stepSize: 0.2
-                },
-                scaleLabel: {
-                    display: true,
-                    labelString: '탁도/잔류염소'
-                }
+                grid: { drawOnChartArea: false },
+                ticks: { min: 0, max: 1, stepSize: 0.2 },
+                scaleLabel: { display: true, labelString: '탁도/잔류염소' }
             }, 
             x: {
                 ticks: {
