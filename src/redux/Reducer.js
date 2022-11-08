@@ -4,6 +4,7 @@ const initialState = {
    city: '',
    district: '',
    tabOpened: false,
+   graphOption: '0',
 }
 
 const reducers = (state=initialState, action) => {
@@ -32,6 +33,12 @@ const reducers = (state=initialState, action) => {
             return {
                 ...state,
                 tabOpened: true,
+            }
+        }
+        case Action.SELECT_GRAPH_OPTION: {
+            return {
+                ...state,
+                graphOption: action.opt,
             }
         }
         default: {

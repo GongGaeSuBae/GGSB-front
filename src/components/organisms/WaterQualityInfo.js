@@ -1,10 +1,14 @@
-import { H1, H2, H4, Span, Good, Bad } from "../atoms";
+import { H1, H2, H4, H5, Span, Good, Bad } from "../atoms";
 import { ColFlex, ColFlexCenter } from "../molecules";
 
 import { Table, Form } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import * as Action from "../../redux/Action";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement,
     LineElement, Title, Tooltip, Legend } from "chart.js";
 import { Line } from "react-chartjs-2";
+
+import { makeWeeklyDateArr, makeMonthlyDateArr } from "../../utils/Date";
 
 const WaterQualityMainInfo = ({city, district, phVal, tbVal, clVal}) => {
     return (<ColFlexCenter id="WaterQualityMainInfo">
@@ -54,11 +58,12 @@ const WaterPurificationInfo = ({city, district, wpname}) => {
 }
 
 const WaterQualityGraphSearchHanlder = () => {
+    const dispatch = useDispatch();
     return (<ColFlex id="WaterQualityGraphSearchHanlder">
-        <H2>▶ 관찰 주기 선택</H2>
-        <Form>
+        <H4>▶ 관찰 주기 선택</H4>
+        <Form onChange={(e) => dispatch(Action.selectGraphOption(e.target.value))}>
             <div key="daterange"></div>
-            <H4>
+            <H5>
                 <Form.Check inline defaultChecked
                 id="daterange-0" className="CustomChk" type="radio"
                 name="RangeSearch" value={0} label="일간" />
@@ -68,7 +73,7 @@ const WaterQualityGraphSearchHanlder = () => {
                 <Form.Check inline
                 id="daterange-2" className="CustomChk" type="radio"
                 name="RangeSearch" value={2} label="월간" />
-            </H4>
+            </H5>
         </Form>
     </ColFlex>
     )
@@ -103,49 +108,90 @@ const WaterQualityGraph = () => {
                 grid: { drawOnChartArea: false },
                 ticks: { min: 0, max: 1, stepSize: 0.2 },
                 scaleLabel: { display: true, labelString: '탁도/잔류염소' }
-            }, 
+            },  
+        }
+    };
+    const dailyOptions = {...options, 
+        scales: {...options.scales, 
             x: {
                 ticks: {
                     callback: function(val, index) {
                         return index%3 === 0 ? this.getLabelForValue(val): ''
                     }
                 }
-            }   
+            }
         }
-    };
-    const waterQualityData = {
-        labels: ["00", "01", "02", "03", "04", "05", 
-        "06", "07", "08", "09", "10", "11",
-        "12", "13", "14", "15", "16", "17", 
-        "18", "19", "20", "21", "22", "23"],
+    }
+
+    const weeklyOptions = {...options, }
+
+    const monthlyOptions = {...options, scales: {...options.scales, 
+        x: {
+            ticks: {
+                callback: function(val, index) {
+                    return index%2 === 0 ? this.getLabelForValue(val): ''
+                }
+            }
+        }
+    }}
+
+    const initData = {
+        labels: [],
         datasets: [
             {
                 label: "pH",
-                data: [7.6455, 7.6391, 7.6383, 7.6440, 7.6455, 7.4356, 
-                    7.6455, 7.6391, 7.6383, 7.6440, 7.6455, 7.4356],
                 fill: false,
                 borderColor: "rgba(242, 114, 140, 1)",
                 yAxisID: 'ph',
             },
             {
                 label: "탁도",
-                data: [0.0525, 0.0532, 0.0536, 0.0528, 0.0524],
                 fill: false,
                 borderColor: "rgba(255, 212, 0, 1)",
                 yAxisID: 'tb_cl'
             },
             {
                 label: "잔류염소",
-                data: [0.9707, 0.9111, 0.8970, 0.9397, 0.9662],
                 fill: false,
                 borderColor: "rgba(39, 170, 225, 1)",
                 yAxisID: 'tb_cl'
             }
         ]
     }
+    const waterQualityDaliyData = {...initData,
+        labels: ["00", "01", "02", "03", "04", "05", 
+        "06", "07", "08", "09", "10", "11",
+        "12", "13", "14", "15", "16", "17", 
+        "18", "19", "20", "21", "22", "23"],
+        datasets: [{...initData.datasets[0], data: [7.6455, 7.6391, 7.6383, 7.6440, 7.6455, 7.6383, 7.6440]}, 
+        {...initData.datasets[1], data: [0.0525, 0.0532, 0.0536, 0.0528, 0.0524, 0.0528, 0.0524]}, 
+        {...initData.datasets[2], data: [0.9707, 0.9111, 0.8970, 0.9397, 0.9662, 0.9397, 0.9662]}]
+    }
+
+    const waterQualityWeeklyLineData = {...initData,
+        labels: makeWeeklyDateArr(),
+        datasets: [{...initData.datasets[0], data: [7.6455, 7.6391, 7.6383, 7.6440, 7.6455, 7.6383, 7.6440]}, 
+        {...initData.datasets[1], data: [0.0525, 0.0532, 0.0536, 0.0528, 0.0524, 0.0528, 0.0524]}, 
+        {...initData.datasets[2], data: [0.9707, 0.9111, 0.8970, 0.9397, 0.9662, 0.9397, 0.9662]}]
+    }
+
+    const waterQualityMonthlyLineData = {...initData,
+        labels: makeMonthlyDateArr(),
+        datasets: [{...initData.datasets[0], data: [7.6455, 7.6391, 7.6383, 7.6440, 7.6455, 7.6383, 7.6440]}, 
+        {...initData.datasets[1], data: [0.0525, 0.0532, 0.0536, 0.0528, 0.0524, 0.0528, 0.0524]}, 
+        {...initData.datasets[2], data: [0.9707, 0.9111, 0.8970, 0.9397, 0.9662, 0.9397, 0.9662]}]
+    }
+
+    const opt = useSelector((state) => state.graphOption);
 
     return (<ColFlex id="WaterQualityGraphWrapper">
-        <Line data={waterQualityData} options={options}/>
+        {opt === '0'
+        ? <Line data={waterQualityDaliyData} options={dailyOptions}/>
+        : opt === '1'
+        ? <Line data={waterQualityWeeklyLineData} options={weeklyOptions} />
+        : opt === '2'
+        ? <Line data={waterQualityMonthlyLineData} options={monthlyOptions} />
+        : <></>}
     </ColFlex>)
 }
 
