@@ -188,15 +188,9 @@ div#WaterPurificationInfo #WaterPurification {
   color: #007bff;
 }
 
-div#SubTab {
-  border-bottom: 1px solid black;
-  margin: 0 -15px;
+ul.CustomSubTab {
+  margin-left: -12.5px;
 }
-div#SubTab .RowFlex {
-  border: 1px solid black;
-  padding: 0.75rem 2rem;
-  font-family: NanumSquareRoundB;
-}
-div#SubTab #open {
+ul.CustomSubTab li.nav-item > button.active {
   background-color: #BDE4F4;
 }

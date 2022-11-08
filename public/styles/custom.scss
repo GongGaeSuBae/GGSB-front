@@ -212,18 +212,24 @@ div#WaterPurificationInfo {
     }
 }
 
-div#SubTab {
-    border-bottom: 1px solid black;
-    margin: 0 -15px;
+// div#SubTab {
+//     border-bottom: 1px solid black;
+//     margin: 0 -15px;
 
-    .RowFlex {
-        border: 1px solid black;
-        padding: 0.75rem 2rem;
-        font-family: NanumSquareRoundB;
-    }
+//     .RowFlex {
+//         border: 1px solid black;
+//         padding: 0.75rem 2rem;
+//         font-family: NanumSquareRoundB;
+//     }
 
-    #open {
+//     #open {
+//         background-color: $GGSB_SKYBLUE;
+//     }
+// }
+
+ul.CustomSubTab {
+    margin-left: -12.5px;
+    li.nav-item> button.active {
         background-color: $GGSB_SKYBLUE;
     }
-}
-    
+} 

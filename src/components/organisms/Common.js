@@ -1,6 +1,7 @@
 import { H1, H5, Span, P, SelectBox, SearchBtn } from "../atoms";
 import { ColFlex, RowFlex, RowWrapper } from "../molecules";
-import { Container } from "react-bootstrap";
+import { WaterQualityInfoTab, WaterQualityGraphTab } from "../templates"
+import { Container, Tabs, Tab } from "react-bootstrap";
 
 import { useCities, useDistricts } from "../../hooks";
 import { useState } from "react";
@@ -75,21 +76,23 @@ const TopBar = () => {
     </Container>)
 }
 
-const Tab = (props) => {
+const CustomTab = (props) => {
     const tabState = useSelector((state) => state.tabOpened);
     const dispatch = useDispatch();
-    
+    const [key, setKey] = useState('info');
     useEffect(() => {}, [tabState]);
     const SubTab = () => {
         return (
-        <RowFlex id="SubTab">
-            <RowFlex 
-            id={props.select === 'info' ? 'open' : 'close'}
-            clickHandler={() => props.handler('info')}>동네 수질</RowFlex>
-            <RowFlex 
-            id={props.select === 'graph' ? 'open' : 'close'}
-            clickHandler={() => props.handler('graph')}>수질 추이</RowFlex>
-        </RowFlex>            
+        <Tabs className="CustomSubTab"
+        activeKey={key}
+        onSelect={(k) => setKey(k)}>
+            <Tab eventKey="info" title="동네 수질">
+            <WaterQualityInfoTab />
+            </Tab>
+            <Tab eventKey="graph" title="수질 추이">
+            <WaterQualityGraphTab />
+            </Tab>
+        </Tabs>         
         )
     }
     return (<div className={tabState ? "TabArea" : "TabAreaClosed"}>
@@ -102,4 +105,4 @@ const Tab = (props) => {
 }
 
 
-export { TopBar, Tab, Search }
+export { TopBar, CustomTab, Search }
