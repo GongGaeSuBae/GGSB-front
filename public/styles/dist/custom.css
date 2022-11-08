@@ -59,7 +59,7 @@ div.ColFlexCenter {
 }
 
 div.TopBar {
-  background-color: #BDE4F4;
+  background-color: #F9F9F9;
   position: fixed;
   z-index: 5;
   padding: 11px 0;
@@ -191,6 +191,11 @@ div#WaterPurificationInfo #WaterPurification {
 ul.CustomSubTab {
   margin-left: -12.5px;
 }
-ul.CustomSubTab li.nav-item > button.active {
+ul.CustomSubTab li.nav-item button:hover {
+  background-color: #3AB0FF;
+  color: white;
+}
+ul.CustomSubTab li.nav-item button.active {
   background-color: #BDE4F4;
+  color: black;
 }

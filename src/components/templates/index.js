@@ -4,13 +4,6 @@ import { ColFlex } from "../molecules";
 import { Search, WaterQualityStandard, WaterQualityMainInfo, WaterPurificationInfo, 
     WaterQualityGraphSearchHanlder, WaterQualityGraph } from "../organisms";
 
-const SearchArea = () => {
-    return (<ColFlex id="SearchArea">
-        <P>수질이 궁금한 지역을 검색해주세요 ex) 경상북도 구미시 거의동</P>
-        <Search />
-    </ColFlex>);
-}
-
 const WaterQualityInfoTab = () => {
     const state = useSelector((state) => state);
     return (<ColFlex id="Tab1">
@@ -22,11 +15,12 @@ const WaterQualityInfoTab = () => {
 }
 
 const WaterQualityGraphTab = () => {
+    const state = useSelector((state) => state);
     return (<ColFlex id="Tab2">
-        <WaterPurificationInfo />
+        <WaterPurificationInfo city={state.city} district={state.district} wpname={"[정수장명]"}/>
         <WaterQualityGraphSearchHanlder />
         <WaterQualityGraph />
     </ColFlex>)
 }
 
-export { SearchArea, WaterQualityInfoTab, WaterQualityGraphTab }
+export { WaterQualityInfoTab, WaterQualityGraphTab }

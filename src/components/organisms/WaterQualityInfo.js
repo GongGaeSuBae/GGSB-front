@@ -53,11 +53,11 @@ const WaterQualityStandard = () => {
     </ColFlex>)
 }
 
-const WaterPurificationInfo = () => {
+const WaterPurificationInfo = ({city, district, wpname}) => {
     return (
         <ColFlexCenter id="WaterPurificationInfo">
-            <H2><Span id="Region">경상북도 구미시 거의동</Span>은</H2>
-            <H2><Span id="WaterPurification">구미정수장</Span>의 물을 사용해요</H2>
+            <H2><Span id="Region">경상북도 {city} {district}</Span>은</H2>
+            <H2><Span id="WaterPurification">{wpname}</Span>의 물을 사용해요</H2>
         </ColFlexCenter>
     )
 }
