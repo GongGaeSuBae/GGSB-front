@@ -1,3 +1,4 @@
+import { useDispatch, useSelector } from "react-redux";
 import { P } from "../atoms";
 import { ColFlex } from "../molecules";
 import { Search, WaterQualityStandard, WaterQualityMainInfo, WaterPurificationInfo, 
@@ -11,8 +12,11 @@ const SearchArea = () => {
 }
 
 const WaterQualityInfoTab = () => {
+    const state = useSelector((state) => state);
     return (<ColFlex id="Tab1">
-        <WaterQualityMainInfo />
+        <WaterQualityMainInfo 
+        city={state.city} district={state.district}
+        phVal={6.0} tbVal={0.632} clVal={7.32}/>
         <WaterQualityStandard/> 
     </ColFlex>)
 }
@@ -22,7 +26,6 @@ const WaterQualityGraphTab = () => {
         <WaterPurificationInfo />
         <WaterQualityGraphSearchHanlder />
         <WaterQualityGraph />
-        {/* <WaterQualityStandard /> */}
     </ColFlex>)
 }
 

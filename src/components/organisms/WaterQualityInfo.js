@@ -15,9 +15,11 @@ import {
 import Chart from "chart.js/auto"
 import { Line } from "react-chartjs-2";
 
-const WaterQualityMainInfo = (props) => {
+const WaterQualityMainInfo = ({city, district, phVal, tbVal, clVal}) => {
     return (<ColFlexCenter id="WaterQualityMainInfo">
-        <H1>경상북도 구미시 거의동</H1><Good/>
+        <H1>경상북도 {city} {district}</H1>
+        {(phVal>=5.8 & phVal<=8.5) && (tbVal<=0.5) && (clVal<=4) 
+        ? <><Good/></> : <><Bad /></>}
         <Table bordered>
             <thead>
                 <th width="33%">pH</th>
@@ -26,14 +28,14 @@ const WaterQualityMainInfo = (props) => {
             </thead>
             <tbody>
                 <tr>
-                    <td>5.9</td>
-                    <td>0.01</td>
-                    <td>0.63</td>
+                    <td>{phVal.toFixed(2)}</td>
+                    <td>{tbVal.toFixed(3)}</td>
+                    <td>{clVal.toFixed(3)}</td>
                 </tr>
                 <tr>
-                    <td><Span id="Good">적합</Span></td>
-                    <td><Span id="Good">적합</Span></td>
-                    <td><Span id="Good">적합</Span></td>
+                    <td><Span id={phVal>=5.8 & phVal<=8.5 ? "Good" : "Bad"}>{phVal>5.8 & phVal<8.5 ? <>적합</> : <>부적합</>}</Span></td>
+                    <td><Span id={tbVal<=0.5 ? "Good" : "Bad"}>{tbVal<=0.5 ? <>적합</> : <>부적합</>}</Span></td>
+                    <td><Span id={clVal<=4 ? "Good" : "Bad"}>{clVal<=4  ? <>적합</> : <>부적합</>}</Span></td>
                 </tr>
             </tbody>
         </Table>
@@ -148,7 +150,7 @@ const WaterQualityGraph = () => {
         datasets: [
             {
                 label: "pH",
-                data: [7.6455, 7.6391, 7.6383, 7.6440, 7.6455],
+                data: [7.6455, 7.6391, 7.6383, 7.6440, 7.6455, 7.4356],
                 fill: false,
                 borderColor: "rgba(242, 114, 140, 1)",
                 yAxisID: 'ph',
