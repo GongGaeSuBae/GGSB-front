@@ -1,4 +1,3 @@
-import { useCities } from '../hooks';
 import * as Action from './Action'
 
 const initialState = {
