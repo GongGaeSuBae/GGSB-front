@@ -3,7 +3,7 @@ import { ColFlex, RowFlex, RowWrapper } from "../molecules";
 import { WaterQualityInfoTab, WaterQualityGraphTab } from "../templates"
 import { Container, Tabs, Tab } from "react-bootstrap";
 
-import { useCities, useDistricts } from "../../hooks";
+import { useCities, useDistricts, useMapInfo } from "../../hooks";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Action from "../../redux/Action";
@@ -21,7 +21,10 @@ const Search = () => {
     
     const dispatch = useDispatch();
     const state = useSelector((state) => state.searchArea);
-    
+    const mapState = useSelector((state) => state.mapInfo);
+
+    const { districts, centers } = useMapInfo();
+
     const DistrictSearch = () => {
         const { districts } = useDistricts(state.city);
         const districtItem = [];
@@ -41,9 +44,8 @@ const Search = () => {
     }
     
     const validate = () => state.city !== '' && state.district !== ''
-
     return (
-    <ColFlex id="SearchArea">
+        <ColFlex id="SearchArea">
         <H5>💧수질이 궁금한 지역을 검색해주세요</H5>
         <RowFlex id="Search">
             <SelectBox id="stateSearch" name="stateSearch" label="경상북도" items={[]}></SelectBox>
@@ -56,8 +58,12 @@ const Search = () => {
             <DistrictSearch />
             <SearchBtn
             eventHandler={e => {
-                if(validate()) 
+                if(validate()) {
                     dispatch(Action.tabOpened());
+                    dispatch(Action.changeMapLevel(mapState.level > 9 ? mapState.level-2 : mapState.level));
+                    var idx = districts.indexOf(state.district);
+                    dispatch(Action.changeMapCenter(centers[idx]));
+                }
                 else 
                     alert('지역을 선택해주세요');
             }} />
