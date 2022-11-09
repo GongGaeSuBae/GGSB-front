@@ -4,7 +4,7 @@ import { WaterQualityStandard, WaterQualityMainInfo, WaterPurificationInfo,
     WaterQualityGraphSearchHanlder, WaterQualityGraph } from "../organisms";
 
 const WaterQualityInfoTab = () => {
-    const state = useSelector((state) => state);
+    const state = useSelector((state) => state.searchArea);
     return (<ColFlex id="Tab1">
         <WaterQualityMainInfo 
         city={state.city} district={state.district}
@@ -14,7 +14,7 @@ const WaterQualityInfoTab = () => {
 }
 
 const WaterQualityGraphTab = () => {
-    const state = useSelector((state) => state);
+    const state = useSelector((state) => state.searchArea);
     return (<ColFlex id="Tab2">
         <WaterPurificationInfo city={state.city} district={state.district} wpname={"[정수장명]"}/>
         <WaterQualityGraphSearchHanlder />

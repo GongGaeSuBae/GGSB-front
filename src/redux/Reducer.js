@@ -1,10 +1,16 @@
 import * as Action from './Action'
 
 const initialState = {
-   city: '',
-   district: '',
-   tabOpened: false,
-   graphOption: '0',
+    searchArea: {city: '', district: ''},
+    tabOptions: {tabOpened: false, tabType: 'info'},
+    graphOption: '0',
+    mapInfo: {
+        center: {lat: 36.45133, lng: 128.534086},
+        level: 10,
+    },
+    mapData: {
+        centers: [], paths: [], dispatchs: []
+    }
 }
 
 const reducers = (state=initialState, action) => {
@@ -14,31 +20,49 @@ const reducers = (state=initialState, action) => {
         case Action.DISPATCH_SEARCH_CITY: {
             return {
                 ...state,
-                city: action.city,
+                searchArea: {city: action.city, district: state.searchArea.district}
             };
         }
         case Action.DISPATCH_SEARCH_DISTRICT: {
             return {
                 ...state,
-                district: action.district,
+                searchArea: {city: state.searchArea.city, district: action.district}
             };
         }
         case Action.TAB_TOGGLE: {
             return {
                 ...state,
-                tabOpened: !state.tabOpened,
+                tabOptions: {tabOpened: !state.tabOptions.tabOpened, tabType: state.tabOptions.tabopt}
             }
         }
         case Action.TAB_OPENED: {
             return {
                 ...state,
-                tabOpened: true,
+                tabOptions: {tabOpened: true, tabType: state.tabOptions.tabopt}
+            }
+        }
+        case Action.CHANGE_TAB_OPTION: {
+            return {
+                ...state,
+                tabOptions: {tabOpened: state.tabOptions.tabOpened, tabType: action.tabopt}
             }
         }
         case Action.SELECT_GRAPH_OPTION: {
             return {
                 ...state,
                 graphOption: action.opt,
+            }
+        }
+        case Action.CHANGE_MAP_CENTER: {
+            return {
+                ...state,
+                mapInfo: {center: action.center, level: state.mapInfo.level}
+            }
+        }
+        case Action.CHANGE_MAP_LEVEL: {
+            return {
+                ...state,
+                mapInfo: {center: state.mapInfo.center, level: action.level}
             }
         }
         default: {

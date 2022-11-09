@@ -1,6 +1,5 @@
 /*global kakao*/
 import { Map, Polygon } from "react-kakao-maps-sdk";
-import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import * as Action from "../../redux/Action";
@@ -9,12 +8,9 @@ import { useMapInfo } from "../../hooks";
 
 const GGSBMap = () => {
     const { districts, centers, paths } = useMapInfo();
-    const [center, setCenter] = useState({lat: 36.45133, lng: 128.534086});
-    const [level, setLevel] = useState(10);
-
     const dispatch = useDispatch();
     const state = useSelector((state) => state);
-
+    
     const onMouseOverEvt = (e) => {
         e.setOptions(mouseEvtStyle.over.bad)
     }
@@ -24,7 +20,7 @@ const GGSBMap = () => {
     }
     
     const onClickEvt = (e, idx) => {
-        setCenter(centers[idx]);
+        dispatch(Action.changeMapCenter(centers[idx]));
         findCityName(centers[idx], (res, status) => {
             if (status === kakao.maps.services.Status.OK) {
                 dispatch(Action.dispatchSearchCity(res[0].region_2depth_name));
@@ -32,17 +28,17 @@ const GGSBMap = () => {
             }
         });
 
-        setLevel(level > 9 ? level-2 : level);
+        dispatch(Action.changeMapLevel(state.mapInfo.level > 9 ? state.mapInfo.level-2 : state.mapInfo.level));
         e.setOptions(mouseEvtStyle.click.bad);
         dispatch(Action.tabOpened());
     }
 
     return (<Map id="GGSBMap"
-        level={level}
+        level={state.mapInfo.level}
         onZoomChanged={(map) => {
-            setLevel(map.getLevel());
+            dispatch(Action.changeMapLevel(map.getLevel()));
         }}
-        center={center}
+        center={state.mapInfo.center}
         style={{ width: "100%", height: "1024px" }}>
             {paths.length !== 0 ? paths.map((path, idx) =>
             <Polygon
@@ -53,7 +49,7 @@ const GGSBMap = () => {
             strokeWeight={1}
             strokeColor={'#a7a9ac'}
             strokeOpacity={0.8}
-            fillColor={state.district === districts[idx] ? '#FF8787' : 'white'}
+            fillColor={state.searchArea.district === districts[idx] ? '#FF8787' : 'white'}
             fillOpacity={0.6}
             />
             ) : <></>}

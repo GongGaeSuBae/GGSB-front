@@ -4,7 +4,6 @@ import { WaterQualityInfoTab, WaterQualityGraphTab } from "../templates"
 import { Container, Tabs, Tab } from "react-bootstrap";
 
 import { useCities, useDistricts } from "../../hooks";
-import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Action from "../../redux/Action";
@@ -21,7 +20,7 @@ const Search = () => {
     cities.map((c) => cityItem.push({name: c, value: c}));
     
     const dispatch = useDispatch();
-    const state = useSelector((state) => state);
+    const state = useSelector((state) => state.searchArea);
     
     const DistrictSearch = () => {
         const { districts } = useDistricts(state.city);
@@ -76,15 +75,14 @@ const TopBar = () => {
 }
 
 const CustomTab = (props) => {
-    const tabState = useSelector((state) => state.tabOpened);
+    const tabState = useSelector((state) => state.tabOptions);
     const dispatch = useDispatch();
-    const [key, setKey] = useState('info');
-    useEffect(() => {}, [tabState]);
+    useEffect(() => {}, [tabState.tabOpened]);
     const SubTab = () => {
         return (
         <Tabs className="CustomSubTab"
-        activeKey={key}
-        onSelect={(k) => setKey(k)}>
+        activeKey={tabState.tabType}
+        onSelect={(k) => dispatch(Action.changeTabOption(k))}>
             <Tab eventKey="info" title="동네 수질">
             <WaterQualityInfoTab />
             </Tab>
@@ -94,8 +92,8 @@ const CustomTab = (props) => {
         </Tabs>         
         )
     }
-    return (<div className={tabState ? "TabArea" : "TabAreaClosed"}>
-        <RowFlex id={tabState ? "TabOpened" : "TabClosed"}>
+    return (<div className={tabState.tabOpened ? "TabArea" : "TabAreaClosed"}>
+        <RowFlex id={tabState.tabOpened ? "TabOpened" : "TabClosed"}>
     <Container className="Tab">
         <div className="ToggleBtn" onClick={() => dispatch(Action.tabToggle())}>{tabState ? <>닫기▶</> : <>열기◀</>}</div>
         <SubTab />
