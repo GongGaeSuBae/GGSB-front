@@ -1,11 +1,11 @@
 import API from './api/API';
 import { useEffect, useState } from 'react';
 
-const useSingleWaterQuality= (district) => {
-    const [ singleWaterQuality, setSingleWaterQuality ] = useState({});
+const useSingleWaterQuality= (city, district) => {
+    const [ singleWaterQuality, setSingleWaterQuality ] = useState(null);
     useEffect(() => {
         const fetchSingleWaterQuality = async() => {
-            setSingleWaterQuality(await API.searchWaterQualityByDistrict(district));
+            setSingleWaterQuality(await API.searchWaterQualityByDistrict(city, district));
         }
         fetchSingleWaterQuality();
     }, []);

@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { ColFlex } from "../molecules";
 import { WaterQualityStandard, WaterQualityMainInfo, WaterPurificationInfo, 
     WaterQualityGraphSearchHanlder, WaterQualityGraph } from "../organisms";
+import { useSingleWaterQuality } from "../../hooks";
 
 const WaterQualityInfoTab = () => {
     const state = useSelector((state) => state.searchArea);
@@ -15,8 +16,13 @@ const WaterQualityInfoTab = () => {
 
 const WaterQualityGraphTab = () => {
     const state = useSelector((state) => state.searchArea);
+    const {singleWaterQuality} = useSingleWaterQuality(state.city, state.district);
+
     return (<ColFlex id="Tab2">
-        <WaterPurificationInfo city={state.city} district={state.district} wpname={"[정수장명]"}/>
+        {singleWaterQuality === null
+        ?<></> 
+        :<><WaterPurificationInfo city={state.city} district={state.district} wpname={singleWaterQuality.waterPurification.wname}/></>}
+        
         <WaterQualityGraphSearchHanlder />
         <WaterQualityGraph />
     </ColFlex>)
