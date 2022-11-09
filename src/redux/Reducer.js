@@ -7,9 +7,6 @@ const initialState = {
     mapInfo: {
         center: {lat: 36.45133, lng: 128.534086},
         level: 10,
-    },
-    mapData: {
-        centers: [], paths: [], dispatchs: []
     }
 }
 
