@@ -21,6 +21,9 @@ export const mouseEvtStyle = {
         },
         bad: {
             fillColor: '#FF8787', fillOpacity: 0.8
+        },
+        normal: {
+            fillColor: '#FFB562', fillOpacity: 0.8
         }
     },
 }

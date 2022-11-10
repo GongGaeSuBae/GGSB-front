@@ -4,20 +4,14 @@ import { Map, Polygon } from "react-kakao-maps-sdk";
 import { useDispatch, useSelector } from "react-redux";
 import * as Action from "../../redux/Action";
 import { findCityName, mouseEvtStyle } from "../../utils";
-import { useMapInfo } from "../../hooks";
+import { useMapInfo, useMultipleWaterQuality } from "../../hooks";
 
 const GGSBMap = () => {
     const { districts, centers, paths } = useMapInfo();
+    const { multipleWaterQuality } = useMultipleWaterQuality();
+
     const dispatch = useDispatch();
     const state = useSelector((state) => state);
-    
-    const onMouseOverEvt = (e) => {
-        e.setOptions(mouseEvtStyle.over.bad)
-    }
-
-    const onMouseOutEvt = (e) => {
-        e.setOptions(mouseEvtStyle.out.bad)
-    }
     
     const onClickEvt = (e, idx) => {
         dispatch(Action.changeMapCenter(centers[idx]));
@@ -29,8 +23,30 @@ const GGSBMap = () => {
         });
 
         dispatch(Action.changeMapLevel(state.mapInfo.level > 9 ? state.mapInfo.level-2 : state.mapInfo.level));
-        e.setOptions(mouseEvtStyle.click.bad);
+        var color = mapAreaColor(districts[idx]);
+        if (color === 'white') e.setOptions(mouseEvtStyle.click.normal);
+        else if (color === 'skyblue') e.setOptions(mouseEvtStyle.click.good);
+        else e.setOptions(mouseEvtStyle.click.bad);
         dispatch(Action.tabOpened());
+    }
+    
+    const mapAreaColor = (dttmp) => {
+        if (multipleWaterQuality !== null) {
+            var idx = multipleWaterQuality.findIndex(obj => obj.district === dttmp);
+            var wq = multipleWaterQuality[idx];
+            if(idx === -1) 
+                if(state.searchArea.district === dttmp) return '#FFB562' 
+                else return 'white'
+            
+            if(wq !== undefined) {
+                if(wq.tbVal <= 0.5 && wq.clVal <= 4 && (wq.phval >= 5.8 && wq.phval <= 8.5))
+                    if(state.searchArea.district === dttmp) return 'blue'
+                    else return 'skyblue';
+                else 
+                if(state.searchArea.district === dttmp) return '#FF8787'
+                    else return '#F8C4B4';
+            }
+        }
     }
 
     return (<Map id="GGSBMap"
@@ -42,14 +58,12 @@ const GGSBMap = () => {
         style={{ width: "100%", height: "1024px" }}>
             {paths.length !== 0 ? paths.map((path, idx) =>
             <Polygon
-            onMouseover={(e)=> onMouseOverEvt(e)}
-            onMouseout={(e)=> onMouseOutEvt(e)}
             onClick={(e) => onClickEvt(e, idx)}
             path={path}
             strokeWeight={1}
             strokeColor={'#a7a9ac'}
             strokeOpacity={0.8}
-            fillColor={state.searchArea.district === districts[idx] ? '#FF8787' : 'white'}
+            fillColor={mapAreaColor(districts[idx])}
             fillOpacity={0.6}
             />
             ) : <></>}

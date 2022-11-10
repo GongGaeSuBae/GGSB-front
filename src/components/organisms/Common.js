@@ -3,7 +3,7 @@ import { ColFlex, RowFlex, RowWrapper } from "../molecules";
 import { WaterQualityInfoTab, WaterQualityGraphTab } from "../templates"
 import { Container, Tabs, Tab } from "react-bootstrap";
 
-import { useCities, useDistricts, useMapInfo } from "../../hooks";
+import { useCities, useDistricts, useMapInfo, useSingleWaterQuality } from "../../hooks";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Action from "../../redux/Action";
@@ -103,7 +103,6 @@ const CustomTab = (props) => {
     <Container className="Tab">
         <div className="ToggleBtn" onClick={() => dispatch(Action.tabToggle())}>{tabState ? <>닫기▶</> : <>열기◀</>}</div>
         <SubTab />
-        {props.children}
     </Container></RowFlex></div>);
 }
 
