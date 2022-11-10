@@ -57,17 +57,19 @@ const WaterPurificationInfo = ({city, district, wpname}) => {
     )
 }
 
-const WaterQualityGraphSearchHanlder = () => {
+const WaterQualityGraphSearchHanlder = ({wpType}) => {
     const dispatch = useDispatch();
     return (<ColFlex id="WaterQualityGraphSearchHanlder">
         <H4>▶ 관찰 주기 선택</H4>
         <Form onChange={(e) => dispatch(Action.selectGraphOption(e.target.value))}>
             <div key="daterange"></div>
             <H5>
-                <Form.Check inline defaultChecked
+                { wpType === 0
+                ? <Form.Check inline defaultChecked
                 id="daterange-0" className="CustomChk" type="radio"
                 name="RangeSearch" value={0} label="일간" />
-                <Form.Check inline
+                : <></>}
+                <Form.Check inline defaultChecked={wpType === 1 ? true : false}
                 id="daterange-1" className="CustomChk" type="radio"
                 name="RangeSearch" value={1} label="주간" />
                 <Form.Check inline
