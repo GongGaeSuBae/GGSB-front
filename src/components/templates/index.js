@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { H3 } from "../atoms";
 import { ColFlex } from "../molecules";
 import { WaterQualityStandard, WaterQualityMainInfo, WaterPurificationInfo, 
-    WaterQualityGraphSearchHanlder, WaterQualityGraph } from "../organisms";
+    WaterQualityGraphSearchHanlder } from "../organisms";
 import { useSingleWaterQuality } from "../../hooks";
 
 const WaterQualityInfoTab = () => {
@@ -13,7 +13,7 @@ const WaterQualityInfoTab = () => {
         { singleWaterQuality !== null
         ?
         <WaterQualityMainInfo 
-        city={state.city} district={state.district}
+        city={state.city} district={state.district} type={singleWaterQuality.waterPurification.type}
         phVal={singleWaterQuality.phval} tbVal={singleWaterQuality.tbVal} clVal={singleWaterQuality.clVal}/>
         : <></>}
         

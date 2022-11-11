@@ -177,16 +177,23 @@ tr > td > span#Bad {
 }
 
 div.Good {
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
     background-image: url('../../assets/images/good.jpg');
     background-size: cover;
 }
 
 div.Bad {
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
     background-image: url('../../assets/images/bad.jpg');
+    background-size: cover;
+}
+
+div.Setting {
+    width: 200px;
+    height: 200px;
+    background-image: url('../../assets/images/setting.png');
     background-size: cover;
 }
 

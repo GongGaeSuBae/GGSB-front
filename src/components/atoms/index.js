@@ -56,4 +56,8 @@ const Bad = () => {
     return(<div className="Bad"></div>);
 }
 
-export { P, Span, H1, H2, H3, H4, H5, SearchBtn, SelectBox, Radio, Good, Bad };
+const Setting = () => {
+    return(<div className="Setting"></div>);
+}
+
+export { P, Span, H1, H2, H3, H4, H5, SearchBtn, SelectBox, Radio, Good, Bad, Setting };

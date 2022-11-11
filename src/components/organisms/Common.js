@@ -82,7 +82,7 @@ const TopBar = () => {
     </Container>)
 }
 
-const CustomTab = (props) => {
+const CustomTab = () => {
     const tabState = useSelector((state) => state.tabOptions);
     const dispatch = useDispatch();
     useEffect(() => {}, [tabState.tabOpened]);

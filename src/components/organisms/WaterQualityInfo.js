@@ -1,7 +1,6 @@
-import { H1, H2, H4, H5, Span, Good, Bad } from "../atoms";
+import { H1, H2, H4, H5, Span, Good, Bad, Setting } from "../atoms";
 import { ColFlex, ColFlexCenter } from "../molecules";
 
-import { useEffect } from "react";
 import { Table, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import * as Action from "../../redux/Action";
@@ -13,9 +12,15 @@ import { useWaterQualityGraphData } from "../../hooks";
 import { makeWeeklyDateArr, makeMonthlyDateArr } from "../../utils/Date";
 import { dailyOptions, weeklyOptions, monthlyOptions, initData } from "../../utils/GraphStyle";
 
-const WaterQualityMainInfo = ({city, district, phVal, tbVal, clVal}) => {
+const WaterQualityMainInfo = ({city, district, phVal, tbVal, clVal, type}) => {
     return (<ColFlexCenter id="WaterQualityMainInfo">
         <H1>경상북도 {city} {district}</H1>
+        {type === 2
+        ? <>
+            <Setting />
+            <H2>점검중 입니다.</H2>
+        </>    
+        :<>
         {(phVal>=5.8 & phVal<=8.5) && (tbVal<=0.5) && (clVal<=4) 
         ? <><Good/></> : <><Bad /></>}
         <Table bordered>
@@ -37,6 +42,8 @@ const WaterQualityMainInfo = ({city, district, phVal, tbVal, clVal}) => {
                 </tr>
             </tbody>
         </Table>
+        </>
+        }
     </ColFlexCenter>)
 }
 
