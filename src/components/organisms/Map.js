@@ -18,6 +18,9 @@ const GGSBMap = () => {
         dispatch(Action.changeMapCenter(centers[idx]));
         findCityName(centers[idx], (res, status) => {
             if (status === kakao.maps.services.Status.OK) {
+                if (res[0].region_2depth_name === '포항시 북구' || res[0].region_2depth_name === '포항시 남구')
+                    dispatch(Action.dispatchSearchCity('포항시'));
+                else
                 dispatch(Action.dispatchSearchCity(res[0].region_2depth_name));
                 dispatch(Action.dispatchSearchDistrict(res[0].region_3depth_name));
             }

@@ -156,4 +156,4 @@ const WaterQualityMonthlyGraph = () => {
 }
 
 export { WaterQualityMainInfo, WaterQualityStandard, WaterPurificationInfo,
-     WaterQualityGraphSearchHanlder, WaterQualityDailyGraph, WaterQualityWeeklyGraph, WaterQualityMonthlyGraph }
+     WaterQualityGraphSearchHanlder }
