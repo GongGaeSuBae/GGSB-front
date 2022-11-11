@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import { H3 } from "../atoms";
 import { ColFlex } from "../molecules";
 import { WaterQualityStandard, WaterQualityMainInfo, WaterPurificationInfo, 
@@ -10,9 +9,6 @@ const WaterQualityInfoTab = () => {
     const state = useSelector((state) => state.searchArea);
     const {singleWaterQuality} = useSingleWaterQuality(state.city, state.district);
 
-    // useEffect(() => {
-
-    // }, [state]);
     return (<ColFlex id="Tab1">
         { singleWaterQuality !== null
         ?

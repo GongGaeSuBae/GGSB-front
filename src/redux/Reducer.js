@@ -2,6 +2,7 @@ import * as Action from './Action'
 
 const initialState = {
     searchArea: {city: '', district: ''},
+    waterPurification: {name: '', type:''},
     tabOptions: {tabOpened: false, tabType: 'info'},
     graphOption: '0',
     mapInfo: {
@@ -38,6 +39,12 @@ const reducers = (state=initialState, action) => {
                 tabOptions: {tabOpened: true, tabType: state.tabOptions.tabopt}
             }
         }
+        case Action.TAB_CLOSED: {
+            return {
+                ...state,
+                tabOptions: {tabOpened: false, tabType: state.tabOptions.tabopt}
+            }
+        }
         case Action.CHANGE_TAB_OPTION: {
             return {
                 ...state,
@@ -60,6 +67,12 @@ const reducers = (state=initialState, action) => {
             return {
                 ...state,
                 mapInfo: {center: state.mapInfo.center, level: action.level}
+            }
+        }
+        case Action.DISPATCH_WATER_PURIFICATION: {
+            return {
+                ...state,
+                waterPurification: {name: action.wp.wname, type: action.wp.type}
             }
         }
         default: {

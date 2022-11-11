@@ -1,10 +1,11 @@
 /*global kakao*/
+import { useEffect } from "react";
 import { Map, Polygon } from "react-kakao-maps-sdk";
 
 import { useDispatch, useSelector } from "react-redux";
 import * as Action from "../../redux/Action";
 import { findCityName, mouseEvtStyle } from "../../utils";
-import { useMapInfo, useMultipleWaterQuality } from "../../hooks";
+import { useMapInfo, useMultipleWaterQuality, useSingleWaterQualitys } from "../../hooks";
 
 const GGSBMap = () => {
     const { districts, centers, paths } = useMapInfo();
@@ -27,7 +28,7 @@ const GGSBMap = () => {
         if (color === 'white') e.setOptions(mouseEvtStyle.click.normal);
         else if (color === 'skyblue') e.setOptions(mouseEvtStyle.click.good);
         else e.setOptions(mouseEvtStyle.click.bad);
-        dispatch(Action.tabOpened());
+        dispatch(Action.tabClosed());
     }
     
     const mapAreaColor = (dttmp) => {
