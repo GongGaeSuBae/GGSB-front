@@ -23,11 +23,11 @@ const useMultipleWaterQuality = () => {
     return { multipleWaterQuality };
 }
 
-const useWaterQualityGraphData = () => {
+const useWaterQualityGraphData = (city, district, range) => {
     const [ waterQualityGraphData, setWaterQualityGraphData ] = useState([]);
     useEffect(() => {
         const fetchWaterQualityGraphData = async() => {
-            setWaterQualityGraphData(await API.showWaterQualityGraph());
+            setWaterQualityGraphData(await API.showWaterQualityGraph(city, district, range));
         }
         fetchWaterQualityGraphData();
     }, []);

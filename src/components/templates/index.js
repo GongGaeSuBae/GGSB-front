@@ -30,8 +30,7 @@ const WaterQualityGraphTab = () => {
         :<><WaterPurificationInfo city={state.city} district={state.district} wpname={singleWaterQuality.waterPurification.wname}/>    
         { singleWaterQuality.waterPurification.type === 2
         ? <H3>수질측정 가능한 정수장이 아닙니다.</H3>
-        : <><WaterQualityGraphSearchHanlder wpType={singleWaterQuality.waterPurification.type}/>
-        <WaterQualityGraph /></>}
+        : <><WaterQualityGraphSearchHanlder wpType={singleWaterQuality.waterPurification.type}/></>}
         </>} 
     </ColFlex>)
 }

@@ -22,12 +22,11 @@ const API = {
     searchWaterQualityCompact: async() => {
         const { todayParam, hourParam } = getTodayParameter();
         const res = await axiosInstance.get(`/waterquality?today=${todayParam}&hour=${hourParam}`);
-        return res;
+        return res.data;
     },
-    showWaterQualityGraph: async(city, district) => {
-        const { todayParam } = getTodayParameter();
-        const res = await axiosInstance.get(`/waterquality/graph?city=${city}&district=${district}&startDay=${todayParam}`);
-        return res;
+    showWaterQualityGraph: async(city, district, range) => {
+        const res = await axiosInstance.get(`/waterquality/graph?city=${city}&district=${district}&range=${range}`);
+        return res.data;
     }
 
 }
