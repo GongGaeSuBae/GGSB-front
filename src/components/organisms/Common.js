@@ -39,6 +39,7 @@ const Search = () => {
         items={districtItem}
         eventHandler={e => {
             dispatch(Action.dispatchSearchDistrict(e.currentTarget.value));
+            dispatch(Action.tabClosed());
         }}></SelectBox>
         </>);
     }
@@ -54,6 +55,7 @@ const Search = () => {
             eventHandler={e => {
                 dispatch(Action.dispatchSearchCity(e.currentTarget.value));
                 dispatch(Action.dispatchSearchDistrict(''));
+                dispatch(Action.tabClosed());
             }}></SelectBox>
             <DistrictSearch />
             <SearchBtn
