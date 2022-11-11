@@ -37,7 +37,7 @@ export const getTodayParameter = () => {
     var year = now.getFullYear();
     var month = '0' + (now.getMonth()+1);
     var day = '0'+now.getDate();
-    var hour = '0' + (now.getHours()-1);
+    var hour = '0' + (now.getHours());
 
     var todayParam = year+'-'+month.slice(-2)+'-'+day.slice(-2);
     var hourParam = hour.slice(-2);

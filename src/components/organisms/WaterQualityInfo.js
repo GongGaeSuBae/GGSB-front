@@ -15,7 +15,7 @@ import { dailyOptions, weeklyOptions, monthlyOptions, initData } from "../../uti
 const WaterQualityMainInfo = ({city, district, phVal, tbVal, clVal, type}) => {
     return (<ColFlexCenter id="WaterQualityMainInfo">
         <H1>경상북도 {city} {district}</H1>
-        {type === 2
+        {type === 2 || phVal === 0 || tbVal === 0 || clVal === 0
         ? <>
             <Setting />
             <H2>점검중 입니다.</H2>
