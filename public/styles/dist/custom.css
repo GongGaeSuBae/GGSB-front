@@ -206,3 +206,7 @@ ul.CustomSubTab li.nav-item button.active {
   background-color: #BDE4F4;
   color: black;
 }
+
+div#WaterQualityBarGraph {
+  padding: 20px 0;
+}

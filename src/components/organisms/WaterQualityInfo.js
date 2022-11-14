@@ -5,13 +5,16 @@ import { Table, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import * as Action from "../../redux/Action";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement,
-    LineElement, Title, Tooltip, Legend } from "chart.js";
-import { Line } from "react-chartjs-2";
+    LineElement, Title, Tooltip, Legend, BarElement  } from "chart.js";
+import { Line, Bar } from "react-chartjs-2";
 
 import { useWaterQualityGraphData } from "../../hooks";
 import { makeWeeklyDateArr, makeMonthlyDateArr, weeklyGraphXAxis } from "../../utils/Date";
-import { dailyOptions, weeklyOptions, monthlyOptions, initData, 
-    preprocessingRealtimeDataWeelky, preprocessingRealtimeDataMonthly } from "../../utils/GraphStyle";
+import { dailyOptions, weeklyOptions, weeklyBarOptions, monthlyOptions, monthlyBarOptions, initData, initBarData,
+    preprocessingRealtimeDataWeekly, preprocessingRealtimeDataMonthly,
+    preprocessingRealtimeDataWeeklyAvg, preprocessingRealtimeDataMonthlyAvg, 
+    preprocessingDailyDataMonthlyAvg } from "../../utils/GraphStyle";
+import { useRef } from "react";
 
 const WaterQualityMainInfo = ({city, district, phVal, tbVal, clVal, type}) => {
     return (<ColFlexCenter id="WaterQualityMainInfo">
@@ -103,7 +106,7 @@ const WaterQualityGraphSearchHanlder = ({wpType}) => {
 
 const WaterQualityDailyGraph = () => {
     ChartJS.register(CategoryScale, LinearScale, PointElement,
-        LineElement, Title, Tooltip, Legend);
+        LineElement, BarElement, Title, Tooltip, Legend);
 
     const state = useSelector((state) => state.searchArea);
     const { waterQualityGraphData } = useWaterQualityGraphData(state.city, state.district, 0);
@@ -126,10 +129,14 @@ const WaterQualityWeeklyGraph = ({wpType}) => {
     ChartJS.register(CategoryScale, LinearScale, PointElement,
         LineElement, Title, Tooltip, Legend);
 
+    const lineRef = useRef();
+    const barRef = useRef();
+
     const state = useSelector((state) => state.searchArea);
     const { waterQualityGraphData } = useWaterQualityGraphData(state.city, state.district, 1);
 
     let waterQualityWeeklyLineData = null;
+    let waterQualityWeeklyBarData = null;
 
     if(wpType === 1) {
         waterQualityWeeklyLineData = {...initData,
@@ -139,7 +146,9 @@ const WaterQualityWeeklyGraph = ({wpType}) => {
             {...initData.datasets[2], data: waterQualityGraphData.clVals}]
         }
     } else {
-        let { phVals, tbVals, clVals, dates } = preprocessingRealtimeDataWeelky(waterQualityGraphData);    
+        let { phVals, tbVals, clVals, dates } = preprocessingRealtimeDataWeekly(waterQualityGraphData);    
+        let { phAvgVals, tbAvgVals, clAvgVals } = preprocessingRealtimeDataWeeklyAvg(waterQualityGraphData);
+       
         waterQualityWeeklyLineData = {
             ...initData,
             labels: weeklyGraphXAxis(),
@@ -147,11 +156,27 @@ const WaterQualityWeeklyGraph = ({wpType}) => {
             {...initData.datasets[1], data: tbVals}, 
             {...initData.datasets[2], data: clVals}]
         }
+
+        waterQualityWeeklyBarData = {
+            ...initBarData,
+            labels: makeWeeklyDateArr(),
+            datasets: [{...initBarData.datasets[0], data: phAvgVals}, 
+            {...initBarData.datasets[1], data: tbAvgVals}, 
+            {...initBarData.datasets[2], data: clAvgVals}]
+        }
     }
 
-    return (<ColFlex id="WaterQualityGraphWrapper">
-        <Line data={waterQualityWeeklyLineData} options={weeklyOptions}/>
-    </ColFlex>)
+    return (<>
+    <ColFlex id="WaterQualityGraphWrapper">
+        <Line height={100} data={waterQualityWeeklyLineData} ref={lineRef} options={weeklyOptions}/>
+        {wpType === 0 ? <>
+        <ColFlex id="WaterQualityBarGraph">
+            <H5>※ 일간 평균 추이</H5>
+            <Bar height={100} data={waterQualityWeeklyBarData}  options={weeklyBarOptions} />
+        </ColFlex>
+        </> : <></> }
+    </ColFlex>
+    </>)
 }
 
 const WaterQualityMonthlyGraph = ({wpType}) => {
@@ -162,17 +187,28 @@ const WaterQualityMonthlyGraph = ({wpType}) => {
     const { waterQualityGraphData } = useWaterQualityGraphData(state.city, state.district, 2);
 
     let waterQualityMonthlyLineData = null;
+    let waterQualityMonthlyBarData = null;
 
     if(wpType === 1) {
+        let { phAvgVals, tbAvgVals, clAvgVals } = preprocessingDailyDataMonthlyAvg(waterQualityGraphData);
+
         waterQualityMonthlyLineData = {...initData,
             labels: makeMonthlyDateArr(),
             datasets: [{...initData.datasets[0], data: waterQualityGraphData.phvals}, 
             {...initData.datasets[1], data: waterQualityGraphData.tbVals}, 
             {...initData.datasets[2], data: waterQualityGraphData.clVals}]
         }
+        waterQualityMonthlyBarData = {
+            ...initBarData,
+            labels: ['1주차', '2주차', '3주차', '4주차'],
+            datasets: [{...initBarData.datasets[0], data: phAvgVals}, 
+            {...initBarData.datasets[1], data: tbAvgVals}, 
+            {...initBarData.datasets[2], data: clAvgVals}]
+        }
     } else {
         let { phVals, tbVals, clVals, dates } = preprocessingRealtimeDataMonthly(waterQualityGraphData);
-        console.log(dates);
+        let { phAvgVals, tbAvgVals, clAvgVals } = preprocessingRealtimeDataMonthlyAvg(waterQualityGraphData);
+    
         waterQualityMonthlyLineData = {
             ...initData,
             labels: makeMonthlyDateArr(),
@@ -180,10 +216,22 @@ const WaterQualityMonthlyGraph = ({wpType}) => {
             {...initData.datasets[1], data: tbVals}, 
             {...initData.datasets[2], data: clVals}]
         }
+
+        waterQualityMonthlyBarData = {
+            ...initBarData,
+            labels: ['1주차', '2주차', '3주차', '4주차'],
+            datasets: [{...initBarData.datasets[0], data: phAvgVals}, 
+            {...initBarData.datasets[1], data: tbAvgVals}, 
+            {...initBarData.datasets[2], data: clAvgVals}]
+        }
     }
 
     return (<ColFlex id="WaterQualityGraphWrapper">
-        <Line data={waterQualityMonthlyLineData} options={monthlyOptions}/>
+        <Line height={100} data={waterQualityMonthlyLineData} options={monthlyOptions}/>
+        <ColFlex id="WaterQualityBarGraph">
+            <H5>※ 주간 평균 추이</H5>
+            <Bar height={100} data={waterQualityMonthlyBarData}  options={monthlyBarOptions} />
+        </ColFlex>
     </ColFlex>)
 }
 
