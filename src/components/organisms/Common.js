@@ -3,7 +3,7 @@ import { ColFlex, RowFlex, RowWrapper } from "../molecules";
 import { WaterQualityInfoTab, WaterQualityGraphTab } from "../templates"
 import { Container, Tabs, Tab } from "react-bootstrap";
 
-import { useCities, useDistricts, useMapInfo, useSingleWaterQuality } from "../../hooks";
+import { useCities, useDistricts, useMapInfo } from "../../hooks";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Action from "../../redux/Action";
@@ -84,6 +84,7 @@ const TopBar = () => {
 
 const CustomTab = () => {
     const tabState = useSelector((state) => state.tabOptions);
+    const locationState = useSelector((state) => state.searchArea);
     const dispatch = useDispatch();
     useEffect(() => {}, [tabState.tabOpened]);
     const SubTab = () => {
@@ -92,10 +93,12 @@ const CustomTab = () => {
         activeKey={tabState.tabType}
         onSelect={(k) => dispatch(Action.changeTabOption(k))}>
             <Tab eventKey="info" title="동네 수질">
-            <WaterQualityInfoTab />
+                {locationState.city !== '' && locationState.district !== ''
+                ?<><WaterQualityInfoTab /></>:<></>}
             </Tab>
             <Tab eventKey="graph" title="수질 추이">
-            <WaterQualityGraphTab />
+                {locationState.city !== '' && locationState.district !== ''
+                ?<><WaterQualityGraphTab /></>:<></>}
             </Tab>
         </Tabs>         
         )

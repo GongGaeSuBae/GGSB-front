@@ -9,8 +9,9 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement,
 import { Line } from "react-chartjs-2";
 
 import { useWaterQualityGraphData } from "../../hooks";
-import { makeWeeklyDateArr, makeMonthlyDateArr } from "../../utils/Date";
-import { dailyOptions, weeklyOptions, monthlyOptions, initData } from "../../utils/GraphStyle";
+import { makeWeeklyDateArr, makeMonthlyDateArr, weeklyGraphXAxis } from "../../utils/Date";
+import { dailyOptions, weeklyOptions, monthlyOptions, initData, 
+    preprocessingRealtimeDataWeelky, preprocessingRealtimeDataMonthly } from "../../utils/GraphStyle";
 
 const WaterQualityMainInfo = ({city, district, phVal, tbVal, clVal, type}) => {
     return (<ColFlexCenter id="WaterQualityMainInfo">
@@ -92,8 +93,8 @@ const WaterQualityGraphSearchHanlder = ({wpType}) => {
             </H5>
         </Form>
         {graphOpt === '0' ? <><WaterQualityDailyGraph /></>
-        : graphOpt === '1' ? <><WaterQualityWeeklyGraph /></>
-        : graphOpt === '2' ? <><WaterQualityMonthlyGraph /></> :<></>
+        : graphOpt === '1' ? <><WaterQualityWeeklyGraph wpType={wpType}/></>
+        : graphOpt === '2' ? <><WaterQualityMonthlyGraph wpType={wpType}/></> :<></>
         }
     </ColFlex>
     )
@@ -106,7 +107,6 @@ const WaterQualityDailyGraph = () => {
 
     const state = useSelector((state) => state.searchArea);
     const { waterQualityGraphData } = useWaterQualityGraphData(state.city, state.district, 0);
-    console.log(waterQualityGraphData);
     
     const waterQualityDaliyData = {...initData,
         labels: ["00", "01", "02", "03", "04", "05", 
@@ -122,19 +122,31 @@ const WaterQualityDailyGraph = () => {
     </ColFlex>)
 }
 
-const WaterQualityWeeklyGraph = () => {
+const WaterQualityWeeklyGraph = ({wpType}) => {
     ChartJS.register(CategoryScale, LinearScale, PointElement,
         LineElement, Title, Tooltip, Legend);
 
     const state = useSelector((state) => state.searchArea);
     const { waterQualityGraphData } = useWaterQualityGraphData(state.city, state.district, 1);
-    console.log(waterQualityGraphData);
 
-    const waterQualityWeeklyLineData = {...initData,
-        labels: makeWeeklyDateArr(),
-        datasets: [{...initData.datasets[0], data: waterQualityGraphData.phvals}, 
-        {...initData.datasets[1], data: waterQualityGraphData.tbVals}, 
-        {...initData.datasets[2], data: waterQualityGraphData.clVals}]
+    let waterQualityWeeklyLineData = null;
+
+    if(wpType === 1) {
+        waterQualityWeeklyLineData = {...initData,
+            labels: makeWeeklyDateArr(),
+            datasets: [{...initData.datasets[0], data: waterQualityGraphData.phvals}, 
+            {...initData.datasets[1], data: waterQualityGraphData.tbVals}, 
+            {...initData.datasets[2], data: waterQualityGraphData.clVals}]
+        }
+    } else {
+        let { phVals, tbVals, clVals, dates } = preprocessingRealtimeDataWeelky(waterQualityGraphData);    
+        waterQualityWeeklyLineData = {
+            ...initData,
+            labels: weeklyGraphXAxis(),
+            datasets: [{...initData.datasets[0], data: phVals}, 
+            {...initData.datasets[1], data: tbVals}, 
+            {...initData.datasets[2], data: clVals}]
+        }
     }
 
     return (<ColFlex id="WaterQualityGraphWrapper">
@@ -142,19 +154,32 @@ const WaterQualityWeeklyGraph = () => {
     </ColFlex>)
 }
 
-const WaterQualityMonthlyGraph = () => {
+const WaterQualityMonthlyGraph = ({wpType}) => {
     ChartJS.register(CategoryScale, LinearScale, PointElement,
         LineElement, Title, Tooltip, Legend);
 
     const state = useSelector((state) => state.searchArea);
     const { waterQualityGraphData } = useWaterQualityGraphData(state.city, state.district, 2);
-    console.log(waterQualityGraphData);
 
-    const waterQualityMonthlyLineData = {...initData,
-        labels: makeMonthlyDateArr(),
-        datasets: [{...initData.datasets[0], data: waterQualityGraphData.phvals}, 
-        {...initData.datasets[1], data: waterQualityGraphData.tbVals}, 
-        {...initData.datasets[2], data: waterQualityGraphData.clVals}]
+    let waterQualityMonthlyLineData = null;
+
+    if(wpType === 1) {
+        waterQualityMonthlyLineData = {...initData,
+            labels: makeMonthlyDateArr(),
+            datasets: [{...initData.datasets[0], data: waterQualityGraphData.phvals}, 
+            {...initData.datasets[1], data: waterQualityGraphData.tbVals}, 
+            {...initData.datasets[2], data: waterQualityGraphData.clVals}]
+        }
+    } else {
+        let { phVals, tbVals, clVals, dates } = preprocessingRealtimeDataMonthly(waterQualityGraphData);
+        console.log(dates);
+        waterQualityMonthlyLineData = {
+            ...initData,
+            labels: makeMonthlyDateArr(),
+            datasets: [{...initData.datasets[0], data: phVals}, 
+            {...initData.datasets[1], data: tbVals}, 
+            {...initData.datasets[2], data: clVals}]
+        }
     }
 
     return (<ColFlex id="WaterQualityGraphWrapper">

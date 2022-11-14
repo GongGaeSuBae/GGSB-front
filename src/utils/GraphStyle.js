@@ -74,3 +74,34 @@ export const initData = {
         }
     ]
 }
+
+export const preprocessingRealtimeDataWeelky = (rawData) => {
+    let phVals = []; let tbVals = []; let clVals = []; let dates = [];
+    if(rawData.dates !== undefined) {
+        for(var i=24; i < rawData.dates.length; i++) {
+            if(rawData.dates[i] % 100 === 24 || rawData.dates[i] % 100 === 6 
+                || rawData.dates[i] % 100 === 12 || rawData.dates[i] % 100 === 18) { 
+                    dates.push(rawData.dates[i]);
+                    phVals.push(rawData.phvals[i]); 
+                    tbVals.push(rawData.tbVals[i]); 
+                    clVals.push(rawData.clVals[i]); 
+                }
+        }
+    }
+    return { phVals, tbVals, clVals, dates }
+}
+
+export const preprocessingRealtimeDataMonthly = (rawData) => {
+    let phVals = []; let tbVals = []; let clVals = []; let dates = [];
+    if(rawData.dates !== undefined) {
+        for(var i=24; i < rawData.dates.length; i++) {
+            if(rawData.dates[i] % 100 === 24) { 
+                    dates.push(rawData.dates[i]);
+                    phVals.push(rawData.phvals[i]); 
+                    tbVals.push(rawData.tbVals[i]); 
+                    clVals.push(rawData.clVals[i]); 
+                }
+        }
+    }
+    return { phVals, tbVals, clVals, dates }
+}

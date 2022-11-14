@@ -43,3 +43,15 @@ export const getTodayParameter = () => {
     var hourParam = hour.slice(-2);
     return { todayParam, hourParam };
 }
+
+export const weeklyGraphXAxis = () => {
+    const weekarr = makeWeeklyDateArr();
+    const newWeekArr = [];
+    weekarr.forEach((wa) => {
+        newWeekArr.push(wa)
+        newWeekArr.push('06:00')
+        newWeekArr.push('12:00')
+        newWeekArr.push('18:00')
+    });
+    return newWeekArr;
+}
