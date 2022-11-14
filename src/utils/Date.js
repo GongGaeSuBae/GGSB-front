@@ -55,3 +55,21 @@ export const weeklyGraphXAxis = () => {
     });
     return newWeekArr;
 }
+
+export const monthlyGraphAvgXAxis = () => {
+    const newMonthlyAvg = [];
+    const tmpMonthly = makeMonthlyDateArr();
+    var nthWeek = 0;
+    var startDay = '', endDay = '';
+    tmpMonthly.forEach((tm, idx) => {
+        if(idx % 7 === 1) {
+            startDay = tm;
+        } else if(idx % 7 === 6) {
+            endDay = tm;
+            newMonthlyAvg.push(`${nthWeek}주차 (${startDay}~${endDay})`)
+        } else if(idx % 7 === 0) {
+            nthWeek++;
+        }
+    });
+    return newMonthlyAvg;
+}

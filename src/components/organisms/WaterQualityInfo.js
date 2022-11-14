@@ -9,7 +9,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement,
 import { Line, Bar } from "react-chartjs-2";
 
 import { useWaterQualityGraphData } from "../../hooks";
-import { makeWeeklyDateArr, makeMonthlyDateArr, weeklyGraphXAxis } from "../../utils/Date";
+import { makeWeeklyDateArr, makeMonthlyDateArr, weeklyGraphXAxis, monthlyGraphAvgXAxis } from "../../utils/Date";
 import { dailyOptions, weeklyOptions, weeklyBarOptions, monthlyOptions, monthlyBarOptions, initData, initBarData,
     preprocessingRealtimeDataWeekly, preprocessingRealtimeDataMonthly,
     preprocessingRealtimeDataWeeklyAvg, preprocessingRealtimeDataMonthlyAvg, 
@@ -196,7 +196,7 @@ const WaterQualityMonthlyGraph = ({wpType}) => {
         }
         waterQualityMonthlyBarData = {
             ...initBarData,
-            labels: ['1주차', '2주차', '3주차', '4주차'],
+            labels: monthlyGraphAvgXAxis(),
             datasets: [{...initBarData.datasets[0], data: phAvgVals}, 
             {...initBarData.datasets[1], data: tbAvgVals}, 
             {...initBarData.datasets[2], data: clAvgVals}]
@@ -215,7 +215,7 @@ const WaterQualityMonthlyGraph = ({wpType}) => {
 
         waterQualityMonthlyBarData = {
             ...initBarData,
-            labels: ['1주차', '2주차', '3주차', '4주차'],
+            labels: monthlyGraphAvgXAxis(),
             datasets: [{...initBarData.datasets[0], data: phAvgVals}, 
             {...initBarData.datasets[1], data: tbAvgVals}, 
             {...initBarData.datasets[2], data: clAvgVals}]
