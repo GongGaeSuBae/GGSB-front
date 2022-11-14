@@ -62,13 +62,12 @@ export const monthlyGraphAvgXAxis = () => {
     var nthWeek = 0;
     var startDay = '', endDay = '';
     tmpMonthly.forEach((tm, idx) => {
-        if(idx % 7 === 1) {
+        if(idx % 7 === 0) {
             startDay = tm;
+            nthWeek++;
         } else if(idx % 7 === 6) {
             endDay = tm;
             newMonthlyAvg.push(`${nthWeek}주차 (${startDay}~${endDay})`)
-        } else if(idx % 7 === 0) {
-            nthWeek++;
         }
     });
     return newMonthlyAvg;
