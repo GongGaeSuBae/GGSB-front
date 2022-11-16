@@ -28,8 +28,8 @@ const GGSBMap = () => {
 
         dispatch(Action.changeMapLevel(state.mapInfo.level > 9 ? state.mapInfo.level-2 : state.mapInfo.level));
         var color = mapAreaColor(districts[idx]);
-        if (color === 'white') e.setOptions(mouseEvtStyle.click.normal);
-        else if (color === 'skyblue') e.setOptions(mouseEvtStyle.click.good);
+        if (color === 'white' || color === '#FFB562') e.setOptions(mouseEvtStyle.click.normal);
+        else if (color === 'skyblue' || color === 'blue') e.setOptions(mouseEvtStyle.click.good);
         else e.setOptions(mouseEvtStyle.click.bad);
         dispatch(Action.tabClosed());
     }
