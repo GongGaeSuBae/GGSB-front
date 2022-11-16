@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { H3 } from "../atoms";
 import { ColFlex } from "../molecules";
 import { WaterQualityStandard, WaterQualityMainInfo, WaterPurificationInfo, 
-    WaterQualityGraphSearchHanlder } from "../organisms";
+    WaterQualityGraphSearchHanlder, MarkInfo } from "../organisms";
 import { useSingleWaterQuality } from "../../hooks";
 
 const WaterQualityInfoTab = () => {
@@ -18,6 +18,7 @@ const WaterQualityInfoTab = () => {
         : <></>}
         
         <WaterQualityStandard/> 
+        <MarkInfo />
     </ColFlex>)
 }
 

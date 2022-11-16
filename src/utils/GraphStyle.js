@@ -7,24 +7,49 @@ const initOptions = {
     responsive: true,
     interaction: {
         mode: 'index',
-        interaction: false,
+        intersect: false,
     },
     stacked: false,
     scales: {
         ph: {
+            scaleLabel: { 
+                display: true, 
+                labelString: 'pH' 
+            },
             type: 'linear',
             display: true,
             position: 'left',
             ticks: { min: 5, max: 9, stepSize: 0.1 },
-            scaleLabel: { display: true, labelString: 'pH' }
+            grid: { drawOnChartArea: false },
+            title: {
+                display: true,
+                align: 'end',
+                color: '#808080',
+                font: {
+                  size: 12,
+                  family: "'Noto Sans KR', sans-serif",
+                  weight: 500,
+                },
+                text: 'pH(pH)'
+              },
+
         },
         tb_cl : {
             type: 'linear',
             display: true,
             position: 'right',
-            grid: { drawOnChartArea: false },
             ticks: { min: 0, max: 1, stepSize: 0.2 },
-            scaleLabel: { display: true, labelString: '탁도/잔류염소' }
+            title: {
+                display: true,
+                align: 'end',
+                color: '#808080',
+                font: {
+                  size: 12,
+                  family: "'Noto Sans KR', sans-serif",
+                  weight: 500,
+                },
+                text: '탁도(NTU), 잔류염소(mg/L)'
+              },
         },  
     }
 };

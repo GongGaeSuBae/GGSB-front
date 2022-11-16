@@ -47,7 +47,10 @@ const Search = () => {
     const validate = () => state.city !== '' && state.district !== ''
     return (
         <ColFlex id="SearchArea">
-        <H5>💧수질이 궁금한 지역을 검색해주세요</H5>
+            <RowFlex>
+                <H5>💧수질이 궁금한 지역을 검색해주세요</H5> 
+                <Span>지도에서 지역을 선택하여 검색할 시, 지역 선택 후 버튼을 클릭해주세요</Span>
+            </RowFlex>
         <RowFlex id="Search">
             <SelectBox id="stateSearch" name="stateSearch" label="경상북도" items={[]}></SelectBox>
             <SelectBox id="citySearch" name="citySearch" label="시/군/구" value={state.city}

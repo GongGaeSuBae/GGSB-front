@@ -1,5 +1,5 @@
 import { H1, H2, H4, H5, Span, Good, Bad, Setting } from "../atoms";
-import { ColFlex, ColFlexCenter } from "../molecules";
+import { ColFlex, ColFlexCenter, RowFlex } from "../molecules";
 
 import { Table, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,8 +29,8 @@ const WaterQualityMainInfo = ({city, district, phVal, tbVal, clVal, type}) => {
         <Table bordered>
             <thead>
                 <th width="33%">pH</th>
-                <th width="33%">탁도</th>
-                <th width="33%">잔류염소</th>
+                <th width="33%">탁도 (NTU)</th>
+                <th width="33%">잔류염소 (mg/L)</th>
             </thead>
             <tbody>
                 <tr>
@@ -52,12 +52,23 @@ const WaterQualityMainInfo = ({city, district, phVal, tbVal, clVal, type}) => {
 
 const WaterQualityStandard = () => {
     return (<ColFlex id="WaterQualityStandard">
-        <H2 className="WQSTitle">수질 적합 기준</H2>
-        <ColFlex id="WQSValueWrapper">
-            <H4 className="WQSValue">pH: 5.8~8.5 사이</H4>
-            <H4 className="WQSValue">탁도: 0.5NTU 이하</H4>
-            <H4 className="WQSValue">잔류염소: 4mg/L 이하</H4>
-        </ColFlex>
+        <Span className="WQSTitle">※ 수질 적합 기준 (출처: K-water)</Span>
+        <Span className="WQSValue">pH: 5.8~8.5 사이, 탁도: 0.5NTU 이하, 잔류염소: 4mg/L 이하</Span>
+    </ColFlex>)
+}
+
+const MarkInfo = () => {
+    return (<ColFlex id="MarkInfo">
+        <Span>※ 공개水배 수질표기법</Span>
+        <RowFlex>
+        <Good id="small"/><Span>&nbsp;: 수질 지표 3개(pH, 탁도, 잔류염소)가 모두 적합할 때</Span>
+        </RowFlex>
+        <RowFlex>
+        <Bad id="small"/> <Span>&nbsp;: 수질 지표 3개(pH, 탁도, 잔류염소) 중 하나라도 부적합할 때</Span>
+        </RowFlex>
+        <RowFlex>
+        <Setting id="small"/> <Span>&nbsp;: 수질 정보 미지원 정수장 및 실시간 정보가 아직 들어오지 않았을 때</Span>
+        </RowFlex>
     </ColFlex>)
 }
 
@@ -232,4 +243,4 @@ const WaterQualityMonthlyGraph = ({wpType}) => {
 }
 
 export { WaterQualityMainInfo, WaterQualityStandard, WaterPurificationInfo,
-     WaterQualityGraphSearchHanlder }
+     WaterQualityGraphSearchHanlder, MarkInfo }

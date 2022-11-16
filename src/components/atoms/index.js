@@ -48,16 +48,16 @@ const Radio = (props) => {
         id={props.id}/>);
 }
 
-const Good = () => {
-    return(<div className="Good"></div>);
+const Good = (props) => {
+    return(<div className="Good" id={props.id}></div>);
 }
 
-const Bad = () => {
-    return(<div className="Bad"></div>);
+const Bad = (props) => {
+    return(<div className="Bad" id={props.id}></div>);
 }
 
-const Setting = () => {
-    return(<div className="Setting"></div>);
+const Setting = (props) => {
+    return(<div className="Setting" id={props.id}></div>);
 }
 
 export { P, Span, H1, H2, H3, H4, H5, SearchBtn, SelectBox, Radio, Good, Bad, Setting };

@@ -64,8 +64,13 @@ div.TopBar {
   z-index: 5;
   padding: 11px 0;
 }
-div.TopBar h5 {
+div.TopBar div.RowFlex h5 {
   font-family: NanumSquareRoundB;
+}
+div.TopBar div.RowFlex span {
+  padding-left: 10px;
+  font-size: 12px;
+  margin-top: 5px;
 }
 div.TopBar div.row {
   width: 100%;
@@ -95,7 +100,7 @@ div.TopBar div.row div#SearchArea div#Search select {
 }
 div.TopBar div.row div#SearchArea div#Search button.SearchBtn {
   margin: 0 7px;
-  width: 75px;
+  width: 70px;
   height: 50px;
 }
 div.TopBar div.row button.SearchBtn {
@@ -138,14 +143,22 @@ div#TabClosed div.Tab {
   right: -700px;
 }
 
-div#WaterQualityStandard {
+div#WaterQualityStandard, div#MarkInfo {
   margin: 1rem;
 }
-div#WaterQualityStandard div.WQSValueWrapper {
+div#WaterQualityStandard div.WQSValueWrapper, div#MarkInfo div.WQSValueWrapper {
   margin: 1rem 0;
 }
-div#WaterQualityStandard div.WQSValueWrapper h4 {
+div#WaterQualityStandard div.WQSValueWrapper h4, div#MarkInfo div.WQSValueWrapper h4 {
   margin: 0;
+}
+
+div#WaterQualityStandard {
+  margin-top: -30px;
+}
+
+div#MarkInfo {
+  margin-top: 10px;
 }
 
 tr > td > span#Good {
@@ -179,9 +192,30 @@ div.Setting {
   background-size: cover;
 }
 
+div.Good#small {
+  width: 30px;
+  height: 30px;
+  background-image: url("../../assets/images/good.jpg");
+  background-size: cover;
+}
+
+div.Bad#small {
+  width: 30px;
+  height: 30px;
+  background-image: url("../../assets/images/bad.jpg");
+  background-size: cover;
+}
+
+div.Setting#small {
+  width: 30px;
+  height: 30px;
+  background-image: url("../../assets/images/setting.png");
+  background-size: cover;
+}
+
 div#WaterQualityMainInfo {
-  height: 600px;
-  padding: 20px 0;
+  height: 550px;
+  padding: 10px 0;
   justify-content: space-around;
 }
 
