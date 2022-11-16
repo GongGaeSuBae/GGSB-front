@@ -59,7 +59,7 @@ const GGSBMap = () => {
             dispatch(Action.changeMapLevel(map.getLevel()));
         }}
         center={state.mapInfo.center}
-        style={{ width: "100%", height: "1024px" }}>
+        style={{ width: "100%", height: "924px" }}>
             {paths.length !== 0 ? paths.map((path, idx) =>
             <Polygon
             onClick={(e) => onClickEvt(e, idx)}
