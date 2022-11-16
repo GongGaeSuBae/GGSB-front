@@ -106,7 +106,7 @@ const CustomTab = () => {
     return (<div className={tabState.tabOpened ? "TabArea" : "TabAreaClosed"}>
         <RowFlex id={tabState.tabOpened ? "TabOpened" : "TabClosed"}>
     <Container className="Tab">
-        <div className="ToggleBtn" onClick={() => dispatch(Action.tabToggle())}>{tabState ? <>닫기▶</> : <>열기◀</>}</div>
+        <div className="ToggleBtn" onClick={() => dispatch(Action.tabToggle())}>{tabState.tabOpened ? <>닫기▶</> : <>열기◀</>}</div>
         <SubTab />
     </Container></RowFlex></div>);
 }
