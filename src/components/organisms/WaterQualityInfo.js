@@ -153,7 +153,7 @@ const WaterQualityWeeklyGraph = ({wpType}) => {
             {...initData.datasets[2], data: waterQualityGraphData.clVals}]
         }
     } else {
-        let { phVals, tbVals, clVals } = preprocessingRealtimeDataWeekly(waterQualityGraphData);    
+        let { phVals, tbVals, clVals, dates } = preprocessingRealtimeDataWeekly(waterQualityGraphData); 
         let { phAvgVals, tbAvgVals, clAvgVals } = preprocessingRealtimeDataWeeklyAvg(waterQualityGraphData);
        
         waterQualityWeeklyLineData = {

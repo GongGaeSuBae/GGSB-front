@@ -1,4 +1,5 @@
-import { getTodayParameter } from './Date';
+import { getTodayParameter, makeWeeklyDateStrArr, makeMonthlyDateStrArr,
+    makeWeeklyAllDateStrArr, makeMonthlyAllDateStrArr} from './Date';
 
 const initOptions = {
     elements: {
@@ -146,81 +147,125 @@ export const initBarData = {
 
 export const preprocessingRealtimeDataWeekly = (rawData) => {
     let phVals = []; let tbVals = []; let clVals = []; let dates = [];
-    if(rawData.dates !== undefined) {
-        for(var i=24; i < rawData.dates.length; i++) {
-            if(rawData.dates[i] % 100 === 24 || rawData.dates[i] % 100 === 6 
-                || rawData.dates[i] % 100 === 12 || rawData.dates[i] % 100 === 18) { 
-                    dates.push(rawData.dates[i]);
-                    phVals.push(rawData.phvals[i]); 
-                    tbVals.push(rawData.tbVals[i]); 
-                    clVals.push(rawData.clVals[i]); 
-                }
+    let weekStrArr = makeWeeklyDateStrArr();
+
+    const pushData = (timeStr, i) => {
+        if(rawData.dates !== undefined) {
+            var idx = rawData.dates.indexOf(`${timeStr}`);
+            if(idx === -1) {
+                dates.push(null)
+                phVals.push(null); 
+                tbVals.push(null); 
+                clVals.push(null); 
+            } else {    
+                dates.push(rawData.dates[idx])
+                phVals.push(rawData.phvals[idx] === 0 ? null : rawData.phvals[idx]); 
+                tbVals.push(rawData.tbVals[idx] === 0 ? null : rawData.tbVals[idx]); 
+                clVals.push(rawData.clVals[idx] === 0 ? null : rawData.clVals[idx]); 
+            }
         }
     }
+
+    for(var j = 0; j < weekStrArr.length; j++) {
+        pushData(weekStrArr[j]);
+    }
+
     return { phVals, tbVals, clVals, dates }
 }
 
 export const preprocessingRealtimeDataMonthly = (rawData) => {
     let phVals = []; let tbVals = []; let clVals = []; let dates = [];
-    if(rawData.dates !== undefined) {
-        for(var i=24; i < rawData.dates.length; i++) {
-            if(rawData.dates[i] % 100 === 24) { 
-                    dates.push(rawData.dates[i]);
-                    phVals.push(rawData.phvals[i]); 
-                    tbVals.push(rawData.tbVals[i]); 
-                    clVals.push(rawData.clVals[i]); 
-                }
+    let monthlyStrArr = makeMonthlyDateStrArr();
+
+    const pushData = (timeStr, i) => {
+        if(rawData.dates !== undefined) {
+            var idx = rawData.dates.indexOf(`${timeStr}`);
+            if(idx === -1) {
+                dates.push(null)
+                phVals.push(null); 
+                tbVals.push(null); 
+                clVals.push(null); 
+            } else {    
+                dates.push(rawData.dates[idx])
+                phVals.push(rawData.phvals[idx] === 0 ? null : rawData.phvals[idx]); 
+                tbVals.push(rawData.tbVals[idx] === 0 ? null : rawData.tbVals[idx]); 
+                clVals.push(rawData.clVals[idx] === 0 ? null : rawData.clVals[idx]); 
+            }
         }
     }
+
+    for(var j = 0; j < monthlyStrArr.length; j++) {
+        pushData(monthlyStrArr[j]);
+    }
+
     return { phVals, tbVals, clVals, dates }
 }
 
 export const preprocessingRealtimeDataWeeklyAvg = (rawData) => {
+    const avgDates = makeWeeklyAllDateStrArr();
     let phAvgVals = []; let tbAvgVals = []; let clAvgVals = [];
-    const { hourParam } = getTodayParameter();
-    if(rawData.dates !== undefined) {
-        var phtmp = 0, tbtmp = 0, cltmp = 0;
-        for(var i=24; i < rawData.dates.length; i++) {
-            if(rawData.dates[i] % 100 !== 23) { 
-                   phtmp += rawData.phvals[i];
-                   tbtmp += rawData.tbVals[i];
-                   cltmp += rawData.clVals[i];
-                } else {
-                    phAvgVals.push(phtmp / 24);
-                    tbAvgVals.push(tbtmp / 24);
-                    clAvgVals.push(cltmp / 24);
-                    phtmp = 0; tbtmp = 0; cltmp = 0;
-                }
-        }
-        if (hourParam !== 24) {  
-            phAvgVals.push(phtmp/(Number(hourParam)+1));
-            tbAvgVals.push(tbtmp/(Number(hourParam)+1));
-            clAvgVals.push(cltmp/(Number(hourParam)+1));
+    var phSum=0, tbSum=0, clSum=0, hours=24;
+
+    const pushData = (timeStr) => {
+        if(rawData.dates !== undefined) {
+            var idx = rawData.dates.indexOf(`${timeStr}`);
+            if(idx === -1) {
+                hours--; 
+            } else {    
+                phSum += rawData.phvals[idx];
+                tbSum += rawData.tbVals[idx];
+                clSum += rawData.clVals[idx];
+            }
+
+            if(Number(timeStr) % 100 === 23) {
+                phAvgVals.push(phSum / hours);
+                tbAvgVals.push(tbSum / hours);
+                clAvgVals.push(clSum / hours);
+                phSum = 0; tbSum = 0; clSum = 0; hours=24;
+            }
         }
     }
+
+    for(var i=0; i < avgDates.length; i++) 
+        pushData(avgDates[i]);
+
     return { phAvgVals, tbAvgVals, clAvgVals }
 }
 
 export const preprocessingRealtimeDataMonthlyAvg = (rawData) => {
+    const avgDates = makeMonthlyAllDateStrArr();
     let phAvgVals = []; let tbAvgVals = []; let clAvgVals = [];
-    if(rawData.dates !== undefined) {
-        var phtmp = 0, tbtmp = 0, cltmp = 0, weekOfDays=1;
-        for(var i=24; i < rawData.dates.length; i++) {
-            if(rawData.dates[i] % 100 !== 23) { 
-                   phtmp += rawData.phvals[i];
-                   tbtmp += rawData.tbVals[i];
-                   cltmp += rawData.clVals[i];
-                } else {
+    var phSum=0, tbSum=0, clSum=0, weekOfDays=1, hours=168;
+
+    const pushData = (timeStr) => {
+        if(rawData.dates !== undefined) {
+            var idx = rawData.dates.indexOf(`${timeStr}`);
+            if(idx === -1) {
+                hours--; 
+            } else {    
+                phSum += rawData.phvals[idx];
+                tbSum += rawData.tbVals[idx];
+                clSum += rawData.clVals[idx];
+            }
+
+            if(Number(timeStr) % 100 === 23) {
+                if(weekOfDays === 7) {
+                    phAvgVals.push(phSum / hours);
+                    tbAvgVals.push(tbSum / hours);
+                    clAvgVals.push(clSum / hours);
+                    phSum = 0; tbSum = 0; clSum = 0; hours=168; weekOfDays=1;
+                } else {   
                     weekOfDays++;
-                    if(weekOfDays === 7) {
-                        phAvgVals.push(phtmp/168); 
-                        tbAvgVals.push(tbtmp/168); 
-                        clAvgVals.push(cltmp/168); 
-                        phtmp = 0; tbtmp = 0; cltmp = 0; weekOfDays=1;
-                    }
                 }
+            } 
+            
         }
     }
+
+    for(var i=0; i < avgDates.length; i++) {
+        pushData(avgDates[i]);
+    }
+
     return { phAvgVals, tbAvgVals, clAvgVals }
 }
 
