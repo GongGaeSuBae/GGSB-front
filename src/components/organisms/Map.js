@@ -45,10 +45,13 @@ const GGSBMap = () => {
             if(wq !== undefined) {
                 if(wq.tbVal <= 0.5 && wq.clVal <= 4 && (wq.phval >= 5.8 && wq.phval <= 8.5))
                     if(state.searchArea.district === dttmp) return 'blue'
-                    else return 'skyblue';
-                else 
-                if(state.searchArea.district === dttmp) return '#FF8787'
-                    else return '#F8C4B4';
+                        else return 'skyblue';
+                else if(wq.tbVal === 0 && wq.clVal === 0 && wq.tbVal === 0)
+                    if(state.searchArea.district === dttmp) return '#FFB562' 
+                        else return 'white'
+                else
+                    if(state.searchArea.district === dttmp) return '#FF8787' 
+                        else return '#F8C4B4';
             }
         }
     }

@@ -145,6 +145,21 @@ export const initBarData = {
     ]
 }
 
+export const preprocessingRealtimeDataDaily = (rawData) => {
+    let phVals = []; let tbVals = []; let clVals = []; let dates = [];
+    
+    if(rawData.dates !== undefined) {
+        rawData.dates.map((rd, idx) => {
+            dates.push(rawData.dates[idx])
+            phVals.push(rawData.phvals[idx] === 0 ? null : rawData.phvals[idx]); 
+            tbVals.push(rawData.tbVals[idx] === 0 ? null : rawData.tbVals[idx]); 
+            clVals.push(rawData.clVals[idx] === 0 ? null : rawData.clVals[idx]); 
+        });
+    }
+
+    return { phVals, tbVals, clVals, dates }
+}
+
 export const preprocessingRealtimeDataWeekly = (rawData) => {
     let phVals = []; let tbVals = []; let clVals = []; let dates = [];
     let weekStrArr = makeWeeklyDateStrArr();
@@ -215,6 +230,8 @@ export const preprocessingRealtimeDataWeeklyAvg = (rawData) => {
                 phSum += rawData.phvals[idx];
                 tbSum += rawData.tbVals[idx];
                 clSum += rawData.clVals[idx];
+                if(rawData.phvals[idx] === 0 && rawData.tbVals[idx] === 0 && rawData.clVals[idx] === 0)
+                    hours--;
             }
 
             if(Number(timeStr) % 100 === 23) {
@@ -246,6 +263,8 @@ export const preprocessingRealtimeDataMonthlyAvg = (rawData) => {
                 phSum += rawData.phvals[idx];
                 tbSum += rawData.tbVals[idx];
                 clSum += rawData.clVals[idx];
+                if(rawData.phvals[idx] === 0 && rawData.tbVals[idx] === 0 && rawData.clVals[idx] === 0)
+                    hours--;
             }
 
             if(Number(timeStr) % 100 === 23) {

@@ -12,7 +12,7 @@ import { useWaterQualityGraphData } from "../../hooks";
 import { makeWeeklyDateArr, makeMonthlyDateArr, weeklyGraphXAxis, monthlyGraphAvgXAxis } from "../../utils/Date";
 import { dailyOptions, weeklyOptions, weeklyBarOptions, monthlyOptions, monthlyBarOptions, initData, initBarData,
     preprocessingRealtimeDataWeekly, preprocessingRealtimeDataMonthly,
-    preprocessingRealtimeDataWeeklyAvg, preprocessingRealtimeDataMonthlyAvg, 
+    preprocessingRealtimeDataWeeklyAvg, preprocessingRealtimeDataMonthlyAvg, preprocessingRealtimeDataDaily,
     preprocessingDailyDataMonthlyAvg } from "../../utils/GraphStyle";
 
 const WaterQualityMainInfo = ({city, district, phVal, tbVal, clVal, type}) => {
@@ -121,14 +121,15 @@ const WaterQualityDailyGraph = () => {
     const state = useSelector((state) => state.searchArea);
     const { waterQualityGraphData } = useWaterQualityGraphData(state.city, state.district, 0);
     
+    const {phVals, tbVals, clVals } = preprocessingRealtimeDataDaily(waterQualityGraphData);
     const waterQualityDaliyData = {...initData,
         labels: ["00", "01", "02", "03", "04", "05", 
         "06", "07", "08", "09", "10", "11",
         "12", "13", "14", "15", "16", "17", 
         "18", "19", "20", "21", "22", "23"],
-        datasets: [{...initData.datasets[0], data: waterQualityGraphData.phvals}, 
-        {...initData.datasets[1], data: waterQualityGraphData.tbVals}, 
-        {...initData.datasets[2], data: waterQualityGraphData.clVals}]
+        datasets: [{...initData.datasets[0], data: phVals}, 
+        {...initData.datasets[1], data: tbVals}, 
+        {...initData.datasets[2], data: clVals}]
     }
     return (<ColFlex id="WaterQualityGraphWrapper">
         <Line data={waterQualityDaliyData} options={dailyOptions}/>
