@@ -122,6 +122,7 @@ const WaterQualityDailyGraph = () => {
     const { waterQualityGraphData } = useWaterQualityGraphData(state.city, state.district, 0);
     
     const {phVals, tbVals, clVals } = preprocessingRealtimeDataDaily(waterQualityGraphData);
+
     const waterQualityDaliyData = {...initData,
         labels: ["00", "01", "02", "03", "04", "05", 
         "06", "07", "08", "09", "10", "11",

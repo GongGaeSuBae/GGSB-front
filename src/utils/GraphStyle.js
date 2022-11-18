@@ -1,4 +1,4 @@
-import { getTodayParameter, makeWeeklyDateStrArr, makeMonthlyDateStrArr,
+import { makeDailyDateStrArr, makeWeeklyDateStrArr, makeMonthlyDateStrArr,
     makeWeeklyAllDateStrArr, makeMonthlyAllDateStrArr} from './Date';
 
 const initOptions = {
@@ -147,14 +147,26 @@ export const initBarData = {
 
 export const preprocessingRealtimeDataDaily = (rawData) => {
     let phVals = []; let tbVals = []; let clVals = []; let dates = [];
-    
-    if(rawData.dates !== undefined) {
-        rawData.dates.map((rd, idx) => {
-            dates.push(rawData.dates[idx])
-            phVals.push(rawData.phvals[idx] === 0 ? null : rawData.phvals[idx]); 
-            tbVals.push(rawData.tbVals[idx] === 0 ? null : rawData.tbVals[idx]); 
-            clVals.push(rawData.clVals[idx] === 0 ? null : rawData.clVals[idx]); 
-        });
+    let dailyStrArr = makeDailyDateStrArr();
+    const pushData = (timeStr, i) => {
+        if(rawData.dates !== undefined) {
+            var idx = rawData.dates.indexOf(`${timeStr}`);
+            if(idx === -1) {
+                dates.push(null)
+                phVals.push(null); 
+                tbVals.push(null); 
+                clVals.push(null); 
+            } else {    
+                dates.push(rawData.dates[idx])
+                phVals.push(rawData.phvals[idx] === 0 ? null : rawData.phvals[idx]); 
+                tbVals.push(rawData.tbVals[idx] === 0 ? null : rawData.tbVals[idx]); 
+                clVals.push(rawData.clVals[idx] === 0 ? null : rawData.clVals[idx]); 
+            }
+        }
+    }
+
+    for(var j = 0; j < dailyStrArr.length; j++) {
+        pushData(dailyStrArr[j]);
     }
 
     return { phVals, tbVals, clVals, dates }

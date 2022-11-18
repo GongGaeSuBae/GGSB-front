@@ -1,3 +1,12 @@
+export const makeDailyDateStrArr = () => {
+    const dailyArr = [];
+    var now = new Date();
+    var date = `${now.getFullYear()}${('0'+(now.getMonth()+1)).slice(-2)}${('0'+(now.getDate())).slice(-2)}`;
+    for(var i=0; i<=23; i++) 
+        dailyArr.push(`${date}${('0' + i).slice(-2)}`);
+    return dailyArr;
+}
+
 export const makeWeeklyDateArr = () => {
     const weeklyArr = [];
     var now = new Date();
