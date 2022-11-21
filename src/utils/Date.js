@@ -1,8 +1,12 @@
 export const makeDailyDateStrArr = () => {
     const dailyArr = [];
     var now = new Date();
+    var yesterday = new Date(now.getTime());
+    yesterday.setDate(yesterday.getDate()-1);
+    var yesterdate = `${yesterday.getFullYear()}${('0'+(yesterday.getMonth()+1)).slice(-2)}${('0'+(yesterday.getDate())).slice(-2)}`;
+    dailyArr.push(`${yesterdate}24`);
     var date = `${now.getFullYear()}${('0'+(now.getMonth()+1)).slice(-2)}${('0'+(now.getDate())).slice(-2)}`;
-    for(var i=0; i<=23; i++) 
+    for(var i=1; i<=23; i++) 
         dailyArr.push(`${date}${('0' + i).slice(-2)}`);
     return dailyArr;
 }
