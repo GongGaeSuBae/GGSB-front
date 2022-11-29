@@ -15,6 +15,8 @@ export const CHANGE_MAP_LEVEL = 'CHANGE_MAP_LEVEL';
 export const DISPATCH_WATER_PURIFICATION = 'DISPATCH_WATER_PURIFICATION';
 export const DISPATCH_WATER_PURIFICATION_WQVAL = 'DISPATCH_WATER_PURIFICATION_WQVAL';
 
+export const LOADING = 'LOADING';
+
 // Action creators
 export const dispatchSearchCity = (city) => {
     return {
@@ -87,5 +89,11 @@ export const dispatchWaterPurificationWqval = (ph, tb, cl) => {
     return {
         type: DISPATCH_WATER_PURIFICATION_WQVAL,
         ph: ph, tb: tb, cl: cl,
+    }
+}
+
+export const loading = () => {
+    return {
+        type: LOADING,
     }
 }

@@ -8,7 +8,8 @@ const initialState = {
     mapInfo: {
         center: {lat: 36.45133, lng: 128.534086},
         level: 10,
-    }
+    },
+    loading: true,
 }
 
 const reducers = (state=initialState, action) => {
@@ -73,6 +74,12 @@ const reducers = (state=initialState, action) => {
             return {
                 ...state,
                 waterPurification: {name: action.wp.wname, type: action.wp.type}
+            }
+        }
+        case Action.LOADING: {
+            return {
+                ...state,
+                loading: false
             }
         }
         default: {

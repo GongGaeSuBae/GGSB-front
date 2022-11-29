@@ -5,15 +5,19 @@ import { Map, Polygon } from "react-kakao-maps-sdk";
 import { useDispatch, useSelector } from "react-redux";
 import * as Action from "../../redux/Action";
 import { findCityName, mouseEvtStyle } from "../../utils";
-import { useMapInfo, useMultipleWaterQuality, useSingleWaterQualitys } from "../../hooks";
+import { useMapInfo, useMultipleWaterQuality } from "../../hooks";
 
 const GGSBMap = () => {
     const { districts, centers, paths } = useMapInfo();
     const { multipleWaterQuality } = useMultipleWaterQuality();
-
     const dispatch = useDispatch();
     const state = useSelector((state) => state);
     
+    useEffect(() => {
+        if(districts.length !== 0 && centers.length !== 0 && paths.length !== 0)    
+            dispatch(Action.loading());
+    }, [districts, centers, paths, dispatch]);
+
     const onClickEvt = (e, idx) => {
         dispatch(Action.changeMapCenter(centers[idx]));
         findCityName(centers[idx], (res, status) => {
@@ -62,7 +66,7 @@ const GGSBMap = () => {
             dispatch(Action.changeMapLevel(map.getLevel()));
         }}
         center={state.mapInfo.center}
-        style={{ width: "100%", height: "924px" }}>
+        style={{ width: "100%", height: "100vh" }}>
             {paths.length !== 0 ? paths.map((path, idx) =>
             <Polygon
             onClick={(e) => onClickEvt(e, idx)}
@@ -72,8 +76,7 @@ const GGSBMap = () => {
             strokeOpacity={0.8}
             fillColor={mapAreaColor(districts[idx])}
             fillOpacity={0.6}
-            />
-            ) : <></>}
+            />) : <></>}
         </Map>);
 }
 

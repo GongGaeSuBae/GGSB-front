@@ -127,7 +127,7 @@ div.TopBar {
 
 div.TabArea, div.TabAreaClosed {
     width: 700px;
-    height: 820px;
+    height: 100vh;
     position: absolute;
     top: 105px;
     right: 0;
@@ -139,7 +139,7 @@ div.TabAreaClosed {
 
 div.Tab {
     width: 700px;
-    height: 820px;
+    height: 100vh;
     position: relative;
     right: 0;
     z-index: 1;
@@ -212,6 +212,39 @@ div.Setting {
     height: 200px;
     background-image: url('../../assets/images/setting.png');
     background-size: cover;
+}
+
+div#LoadingView {
+    background-color: rgba( 0, 0, 0, 0.5 );
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    z-index: 5;
+    
+    div.LoadingCharacter {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 5;
+        div.MulBangul {
+            width: 500px;
+            height: 500px;
+            background-image: url('../../assets/images/mulbangul.png');
+            background-size: cover;
+            position: relative;
+        }
+        
+        div.LoadingBar {
+            width: 200px;
+            height: 200px;
+            background-image: url('../../assets/images/loading.gif');
+            background-size: cover;
+            position: relative;
+            top: -125px;
+            left: 150px;
+        }    
+    }
 }
 
 div.Good#small {

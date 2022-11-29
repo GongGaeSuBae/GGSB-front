@@ -1,5 +1,5 @@
-import { H1, H5, Span, SelectBox, SearchBtn } from "../atoms";
-import { ColFlex, RowFlex, RowWrapper } from "../molecules";
+import { H1, H2, H5, Span, SelectBox, SearchBtn, LoadingCharacter } from "../atoms";
+import { ColFlex, RowFlex, ColFlexCenter, RowWrapper } from "../molecules";
 import { WaterQualityInfoTab, WaterQualityGraphTab } from "../templates"
 import { Container, Tabs, Tab } from "react-bootstrap";
 
@@ -14,6 +14,11 @@ const Logo = () => {
     </ColFlex>);
 }
 
+const Loading = () => {
+    return (<ColFlexCenter id="LoadingView">
+        <LoadingCharacter />
+    </ColFlexCenter>)
+}
 const Search = () => {
     const { cities } = useCities();
     const cityItem = [];
@@ -115,4 +120,4 @@ const CustomTab = () => {
 }
 
 
-export { TopBar, CustomTab, Search }
+export { TopBar, CustomTab, Search, Loading }

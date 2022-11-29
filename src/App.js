@@ -1,15 +1,15 @@
-import { GGSBMap, TopBar, CustomTab } from "./components/organisms";
-import { Provider } from "react-redux";
-import store from './redux/Store';
-import reducers from './redux/Reducer';
+import { GGSBMap, TopBar, CustomTab, Loading } from "./components/organisms";
+import { useSelector } from "react-redux";
 
 const App = () => {
+    const loading = useSelector((state) => state.loading);
     return (
-      <Provider store={store(reducers)}>
+      <>
           <TopBar />
+          { loading ? <Loading /> : <></>}
           <GGSBMap />
           <CustomTab />
-      </Provider>
+      </>
     );
 }
 

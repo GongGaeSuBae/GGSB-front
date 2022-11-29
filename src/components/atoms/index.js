@@ -60,4 +60,11 @@ const Setting = (props) => {
     return(<div className="Setting" id={props.id}></div>);
 }
 
-export { P, Span, H1, H2, H3, H4, H5, SearchBtn, SelectBox, Radio, Good, Bad, Setting };
+const LoadingCharacter = () => {
+    return(<div className="LoadingCharacter">
+        <div className="MulBangul"></div>
+        <div className="LoadingBar"></div>
+    </div>)
+}
+
+export { P, Span, H1, H2, H3, H4, H5, SearchBtn, SelectBox, Radio, Good, Bad, Setting, LoadingCharacter };

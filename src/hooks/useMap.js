@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { centroid } from '../utils/Location';
 import $ from "jquery";
+import { useDispatch } from 'react-redux';
+import * as Action from '../redux/Action';
 
 const useMapInfo = () => {
     const [ districts, setDistricts ] = useState([]);
     const [ centers, setCenters ] = useState([]);
     const [ paths, setPaths ] = useState([]);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         let dttmp = [];
