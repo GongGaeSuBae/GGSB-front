@@ -97,9 +97,10 @@ div.TopBar div.row div#SearchArea p {
 div.TopBar div.row div#SearchArea div#Search select {
   width: 200px;
   height: 50px;
+  margin: 0 2.5px;
 }
 div.TopBar div.row div#SearchArea div#Search button.SearchBtn {
-  margin: 0 7px;
+  margin: 0 2.5px;
   width: 70px;
   height: 50px;
 }
