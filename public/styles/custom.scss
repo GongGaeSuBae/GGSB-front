@@ -69,9 +69,10 @@ div.ColFlexCenter {
 
 div.TopBar {
     background-color: $GGSB_WHITE;
-    position: fixed;
+    position: absolute;
     z-index: 5;
     padding: 11px 0;
+    height: 105px;
 
     div.RowFlex {
         h5 {
@@ -127,7 +128,7 @@ div.TopBar {
 
 div.TabArea, div.TabAreaClosed {
     width: 700px;
-    height: 100vh;
+    height: calc(100vh - 105px);
     position: absolute;
     top: 105px;
     right: 0;
@@ -139,7 +140,7 @@ div.TabAreaClosed {
 
 div.Tab {
     width: 700px;
-    height: 100vh;
+    height: calc(100vh - 105px);
     position: relative;
     right: 0;
     z-index: 1;
